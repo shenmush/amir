@@ -1,0 +1,1228 @@
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2")
+    format("woff2");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl;
+}
+
+:root {
+  --primary-color: #2196f3;
+  --primary-dark: #1976d2;
+  --success-color: #26a69a;
+  --danger-color: #ef5350;
+  --text-primary: #333;
+  --text-secondary: #444;
+  --background-color: #f4f6f9;
+  --newbackground-color: #6c1f4b;
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(108, 31, 75, 0.15);
+  --shadow-lg: 0 6px 20px rgba(108, 31, 75, 0.2);
+}
+
+body {
+  background: var(--background-color);
+}
+
+#toppest-nav {
+  height: 56px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  box-shadow: var(--shadow-sm);
+  padding: 0 20px;
+}
+
+.main-menu-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  list-style: none;
+  margin-right: 15px;
+}
+
+.main-menu-right-items {
+  border: 2px solid #ffffff;
+  width: 135px;
+  height: 40px;
+  background-color: var(--newbackground-color);
+  color: var(--background-color);
+  border-radius: 20px;
+  text-align: center;
+  padding: 5px;
+}
+
+.linkmenu {
+  text-decoration: none;
+  color: white;
+  display: block;
+  line-height: 30px;
+}
+
+.linkmenulast {
+  color: var(--newbackground-color);
+}
+
+#left-toppest-nav {
+  background-color: #ffffff;
+  color: var(--newbackground-color);
+  border: 2px solid var(--newbackground-color);
+  border-radius: 20px;
+  padding: 5px 15px;
+  margin-left: 20px;
+}
+
+.samane-tahlil {
+  width: 100%;
+  height: 80px;
+  background-color: var(--newbackground-color);
+  background-image: url("pattern.png");
+}
+
+.matnesamane {
+  color: white;
+  font-weight: bold;
+  font-size: 26px;
+  padding-right: 50px;
+  padding-top: 18px;
+}
+
+.matnesamane:hover {
+  font-size: 29px;
+  transition: 0.7s;
+}
+
+.etelaeiyeArze {
+  width: 99%;
+  max-width: 1400px;
+  background: var(--newbackground-color);
+  border-radius: 24px;
+  box-shadow: var(--shadow-md);
+  padding: 20px;
+  margin: 8px auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.matneEtelaeiyeArze {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin: 10px 20px;
+  flex: 1;
+}
+
+.filter-item {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px 20px 10px auto;
+}
+
+#offerType + .select2-container--default .select2-selection--single {
+  width: 100%;
+  height: 42px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--newbackground-color);
+  padding: 8px 15px;
+  background-color: white;
+  border: 2px solid #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+#offerType + .select2-container--default .select2-selection--single:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: var(--newbackground-color);
+  line-height: 26px;
+  padding-right: 30px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 42px;
+  left: 10px;
+  right: auto;
+}
+
+.select2-container--default .select2-dropdown {
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+  border: none;
+  overflow: hidden;
+}
+
+.select2-container--default .select2-results__option {
+  padding: 8px 15px;
+  font-size: 14px;
+}
+
+.select2-container--default
+  .select2-results__option--highlighted[aria-selected] {
+  background-color: var(--newbackground-color);
+  color: white;
+}
+
+/* تنظیمات عمومی select2 برای همه انواع فیلترها */
+.select2-container--default .select2-selection--single {
+  width: 100%;
+  height: 40px;
+  border-radius: 15px;
+  font-size: 14px;
+  color: var(--newbackground-color);
+  padding: 5px 10px;
+  background-color: white;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: var(--newbackground-color);
+  line-height: 28px;
+  padding-right: 15px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* تنظیمات برای dropdown های select2 */
+.select2-dropdown {
+  border-radius: 15px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: 280px !important;
+}
+
+/* اصلاح موقعیت dropdown نسبت به دکمه */
+.select2-container--open .select2-dropdown {
+  left: 0 !important;
+  right: auto !important;
+}
+
+.select2-dropdown {
+  border-radius: 15px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: 280px !important;
+}
+
+/* اصلاح موقعیت dropdown نسبت به دکمه */
+.select2-container--open .select2-dropdown {
+  left: 0 !important;
+  right: auto !important;
+}
+
+.select2-container {
+  width: 100% !important;
+}
+
+.select2-results {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.select2-results__options {
+  max-width: 100%;
+}
+
+.select2-results__option {
+  white-space: normal;
+  word-wrap: break-word;
+  padding: 8px 15px;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* مدیریت بهتر فضا در فیلترها */
+.filter-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.flexItems {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.flexItems label {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+}
+
+/* مطمئن شدن از اینکه select2 عرض بیشتر از والد خود نگیرد */
+.select2 {
+  width: 100% !important;
+}
+
+.select2-container--open .select2-dropdown {
+  left: 0;
+}
+
+/* نمایش اسکرول برای جدول */
+.table-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  margin-top: 15px;
+}
+
+/* تنظیمات بهینه‌شده برای جدول با اسکرول افقی */
+.dataTables_scrollBody {
+  overflow-x: auto !important;
+  max-width: 100%;
+  margin-bottom: 50px !important; /* افزایش فاصله از پایین */
+}
+
+/* اطمینان از اینکه جدول به درستی اسکرول می‌شود */
+.dataTables_wrapper {
+  width: 100%;
+  padding-bottom: 80px !important; /* افزایش فضای پایین */
+  position: relative;
+}
+
+/* اصلاح مشکل عدم نمایش اسکرول افقی */
+.dataTables_scroll {
+  overflow: auto;
+  max-width: 100%;
+  width: 100%;
+  max-height: none;
+}
+
+/* بهبود استایل کلی جدول */
+#dataTable {
+  width: 100% !important;
+  min-width: 100%;
+}
+
+/* مطمئن شدن از این که در حالت اسکرول، هدر و محتوا هم‌تراز هستند */
+.dataTables_scrollHeadInner,
+.dataTables_scrollHeadInner table {
+  width: 100% !important;
+}
+
+/* تنظیم عرض سلول‌ها برای اسکرول بهتر */
+.dataTables_wrapper th,
+.dataTables_wrapper td {
+  min-width: 100px !important;
+  max-width: 250px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* حالت ویژه برای جدول با تعداد زیاد ستون */
+.has-many-columns .dataTables_scrollBody {
+  overflow-x: scroll !important;
+}
+
+/* نشانگرهای اسکرول افقی */
+.table-container.has-horizontal-scroll:before,
+.table-container.has-horizontal-scroll:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 20px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.table-container.has-horizontal-scroll:before {
+  left: 0;
+  background: linear-gradient(
+    to left,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.7)
+  );
+  opacity: 0;
+}
+
+.table-container.has-horizontal-scroll:after {
+  right: 0;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.7)
+  );
+}
+
+.table-container.has-horizontal-scroll.at-start:before {
+  opacity: 0;
+}
+
+.table-container.has-horizontal-scroll.at-end:after {
+  opacity: 0;
+}
+
+.table-container.has-horizontal-scroll:not(.at-start):before {
+  opacity: 1;
+}
+
+/* استایل بهبود یافته برای قاب جدول و اسکرول افقی */
+.bgshowresult {
+  border-radius: 15px;
+  background-color: white;
+  box-shadow: var(--shadow-md);
+  padding: 15px;
+  margin-top: 15px;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px !important;
+}
+
+#dataTable {
+  width: 100% !important;
+  min-width: 100%;
+  table-layout: auto;
+}
+
+/* اصلاح مشکل overflow در انتخاب‌گر ستون‌ها */
+.column-options {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+/* استایل بهبود یافته برای بخش انتخاب ستون */
+.column-selector-container {
+  margin-bottom: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  background-color: white;
+  border: 1px solid rgba(108, 31, 75, 0.2);
+}
+
+.column-selector-title {
+  padding: 12px 15px;
+  background-color: var(--newbackground-color);
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.column-selector-title:hover {
+  background-color: #8e2962;
+}
+
+.column-selector-title .material-symbols-outlined {
+  font-size: 24px;
+}
+
+.select-all-option {
+  padding: 10px 15px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+}
+
+.column-options {
+  display: none;
+  max-height: 300px;
+  overflow-y: auto;
+  background-color: white;
+}
+
+.column-category {
+  padding: 8px 15px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: var(--newbackground-color);
+  border-bottom: 1px solid #ddd;
+}
+
+.column-option {
+  padding: 8px 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.column-option label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+}
+
+.column-option input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* اسکرول عمودی برای جدول */
+.dataTables_wrapper {
+  width: 100%;
+  max-width: 100%;
+  background: white;
+  padding: 0;
+  border-radius: 12px;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* تنظیم موقعیت اطلاعات صفحه‌بندی */
+.dataTables_info {
+  position: absolute;
+  bottom: 25px !important; /* افزایش فاصله از پایین */
+  right: 20px;
+  text-align: right;
+  z-index: 10;
+}
+
+.dataTables_wrapper table {
+  width: 100% !important;
+}
+
+.dataTables_scrollBody {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* ایجاد گروه‌بندی در ستون‌ها */
+.column-category {
+  padding: 8px 15px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  color: var(--newbackground-color);
+  border-bottom: 1px solid #ddd;
+}
+
+/* اسکرول زیباتر برای لیست ستون‌ها */
+.column-options::-webkit-scrollbar {
+  width: 8px;
+}
+
+.column-options::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.column-options::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.column-options::-webkit-scrollbar-thumb:hover {
+  background: #aaa;
+}
+
+/* اضافه کردن اسکرول افقی برای DataTables */
+.dataTables_scroll {
+  width: 100% !important;
+  max-width: 100%;
+  max-height: none;
+}
+
+.dataTables_scrollHeadInner,
+.dataTables_scrollHeadInner table {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.mainA {
+  display: flex;
+  margin: 10px auto;
+  max-width: 1400px;
+  width: 99%;
+}
+
+.righttmainA {
+  width: 300px;
+  flex-shrink: 0;
+  background-color: var(--newbackground-color);
+  background-image: linear-gradient(135deg, #6c1f4b 0%, #8e2962 100%);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+  height: fit-content;
+  margin-left: 20px;
+}
+
+.leftmainA {
+  max-width: 100%;
+  overflow: hidden;
+  flex: 1;
+  background-color: var(--newbackground-color);
+  background-image: linear-gradient(135deg, #6c1f4b 0%, #8e2962 100%);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-lg);
+  min-height: 600px;
+}
+
+.filterchoosename {
+  font-size: 20px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.filtersselection {
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  margin: 10px 0;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+}
+
+.selected-filters {
+  margin: 10px;
+}
+
+.filter-tag {
+  display: inline-block;
+  background-color: white;
+  color: var(--newbackground-color);
+  padding: 5px 10px;
+  border-radius: 12px;
+  margin: 3px;
+  font-size: 13px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.filter-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.filter-card {
+  margin-bottom: 15px;
+}
+
+.filter-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.flexItems {
+  width: 100%;
+}
+
+.flexItems label {
+  color: white;
+  font-weight: bold;
+  margin-bottom: 8px;
+  display: block;
+  font-size: 14px;
+}
+
+.date-input,
+.select2-filter + .select2-container--default .select2-selection--single {
+  width: 100%;
+  height: 40px;
+  background: white;
+  color: var(--newbackground-color);
+  border: none;
+  border-radius: 15px;
+  font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.date-input:focus,
+.select2-filter + .select2-container--default .select2-selection--single:focus {
+  outline: none;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background: white;
+  color: var(--newbackground-color);
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 0;
+  margin: 0;
+  width: 100%;
+  display: block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* استایل دکمه حذف همه فیلترها */
+.btn.btn-secondary.clear-filters {
+  background-color: #f44336;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 15px;
+  padding: 12px 0;
+  margin: 0 0 15px 0; /* تغییر مارژین برای فاصله با دکمه اعمال فیلترها */
+  width: 100%;
+  display: block;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  text-align: center;
+}
+
+.btn.btn-secondary.clear-filters:hover {
+  background-color: #d32f2f;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn.btn-secondary.clear-filters:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.headiing {
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  margin: 15px 20px;
+}
+
+.nothingtoshowdiv {
+  display: flex;
+  width: 100%;
+  background-color: white;
+  height: 70px;
+  border-radius: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+.nothingtoshow {
+  font-size: 26px;
+  color: gray;
+}
+
+/* استایل‌های جدول با اسکرول بهتر */
+.bgshowresult {
+  border-radius: 15px;
+  padding: 15px;
+  background-color: white;
+  box-shadow: var(--shadow-md);
+  max-height: none;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px !important;
+}
+
+/* منطقه اسکرول جدول */
+.dataTables_scroll {
+  overflow: auto;
+  max-width: 100%;
+  max-height: none;
+  width: 100%;
+  flex: 1;
+}
+
+.dataTables_scrollHead {
+  overflow: hidden !important;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.dataTables_scrollHeadInner {
+  width: auto !important;
+}
+
+.dataTables_scrollBody {
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 50px !important;
+}
+
+/* تنظیمات جدول */
+.dataTables_wrapper table {
+  width: 100% !important;
+  margin: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+}
+
+/* هدر جدول */
+.dataTables_wrapper table thead th {
+  background-color: var(--newbackground-color);
+  color: white;
+  font-weight: bold;
+  padding: 12px 15px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border: 1px solid #8e2962;
+  text-align: center;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 120px;
+  max-width: 250px;
+}
+
+/* سلول‌های جدول */
+.dataTables_wrapper table tbody td {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  text-align: center;
+  vertical-align: middle;
+  white-space: nowrap;
+  max-width: 250px;
+  min-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ردیف‌های زوج جدول */
+.dataTables_wrapper table tbody tr:nth-child(even) {
+  background-color: #f9f9fb;
+}
+
+/* هاور روی ردیف‌ها */
+.dataTables_wrapper table tbody tr:hover {
+  background-color: #f0e0e9;
+  transition: background-color 0.2s;
+}
+
+/* استایل برای نمایش کامل متن در هاور */
+.dataTables_wrapper table tbody td:hover {
+  overflow: visible;
+  white-space: normal;
+  background-color: #f0e0e9;
+  position: relative;
+  z-index: 5;
+}
+
+/* کنترل‌های جدول */
+.dataTables_info,
+.dataTables_length,
+.dataTables_filter,
+.dataTables_paginate {
+  padding: 10px;
+  font-size: 14px;
+  color: var(--text-primary);
+  margin: 8px 0;
+}
+
+/* جایگذاری کنترل‌های جدول */
+.dataTables_length {
+  float: right;
+}
+
+.dataTables_filter {
+  float: left;
+  text-align: left;
+}
+
+/* تنظیم دقیق‌تر موقعیت کنترل‌های صفحه‌بندی */
+.dataTables_paginate {
+  position: absolute;
+  bottom: 15px !important; /* افزایش فاصله از پایین */
+  left: 0;
+  right: 0;
+  width: 100%;
+  text-align: center;
+  padding: 10px 0;
+  display: block !important;
+  clear: both;
+  background-color: white; /* افزودن پس‌زمینه برای اطمینان از مشاهده‌پذیری */
+  z-index: 10; /* افزایش z-index برای جلوگیری از پوشیده شدن */
+}
+
+/* اطمینان از عدم تداخل دکمه‌های صفحه‌بندی */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 3px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f5f5f5 !important;
+  color: var(--text-primary) !important;
+  border: 1px solid #ddd !important;
+  padding: 0 10px !important;
+  transition: all 0.2s;
+  position: relative; /* افزودن position برای تنظیم دقیق‌تر */
+  z-index: 15;
+}
+
+/* بهبود نمایش دکمه‌های صفحه‌بندی در فضای کم */
+.dataTables_wrapper .dataTables_paginate .ellipsis {
+  display: inline-block;
+  min-width: 20px;
+  padding: 0 5px;
+}
+
+/* تنظیمات بهبود یافته برای صفحه‌بندی */
+.dataTables_wrapper .dataTables_paginate {
+  margin-top: 15px;
+  text-align: center;
+  padding: 10px 0;
+  width: 100%;
+  display: block;
+  clear: both;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  display: inline-block;
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 3px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f5f5f5;
+  color: var(--text-primary) !important;
+  border: 1px solid #ddd !important;
+  padding: 0 10px !important;
+  transition: all 0.2s;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #e0e0e0 !important;
+  color: var(--text-primary) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: var(--newbackground-color) !important;
+  color: white !important;
+  border-color: var(--newbackground-color) !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* بهبود نمایش کنترل‌های بالا و پایین جدول */
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+  margin-bottom: 15px;
+}
+
+.dataTables_wrapper .dataTables_info {
+  margin-top: 15px;
+  text-align: right;
+}
+
+/* حذف اسکرول عمودی و اطمینان از صفحه‌بندی بجای آن */
+.dataTables_scrollBody {
+  overflow-y: visible !important;
+  max-height: none !important;
+}
+
+/* ظاهر دکمه‌های صفحه‌بندی */
+.paginate_button {
+  display: inline-block;
+  min-width: 30px;
+  height: 30px;
+  line-height: 30px;
+  margin: 0 3px;
+  text-align: center;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #f5f5f5 !important;
+  color: var(--text-primary) !important;
+  border: 1px solid #ddd !important;
+  padding: 5px 10px !important;
+  transition: all 0.2s;
+}
+
+.paginate_button:hover {
+  background-color: #e0e0e0 !important;
+  color: var(--text-primary) !important;
+}
+
+.paginate_button.current {
+  background-color: var(--newbackground-color) !important;
+  color: white !important;
+  border-color: var(--newbackground-color) !important;
+}
+
+.paginate_button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* نشانگر قابلیت اسکرول */
+.table-container:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    rgba(255, 255, 255, 0.7)
+  );
+  pointer-events: none;
+}
+
+/* استایل برای دکمه‌های اکسپورت */
+div.dt-buttons {
+  margin: 10px 0;
+  text-align: center;
+}
+
+button.dt-button {
+  background-color: white;
+  color: var(--newbackground-color);
+  border: 1px solid var(--newbackground-color);
+  border-radius: 8px;
+  padding: 5px 10px;
+  margin: 0 5px;
+  font-size: 13px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button.dt-button:hover {
+  background-color: var(--newbackground-color);
+  color: white;
+}
+
+/* بهبود فیلد جستجو */
+.dataTables_filter input {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-right: 8px;
+  font-size: 14px;
+  width: 200px;
+}
+
+.dataTables_filter input:focus {
+  outline: none;
+  border-color: var(--newbackground-color);
+  box-shadow: 0 0 0 2px rgba(108, 31, 75, 0.2);
+}
+
+/* استایل select برای تعداد نمایش */
+.dataTables_length select {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin: 0 8px;
+  font-size: 14px;
+}
+
+.dataTables_length select:focus {
+  outline: none;
+  border-color: var(--newbackground-color);
+  box-shadow: 0 0 0 2px rgba(108, 31, 75, 0.2);
+}
+
+/* بهبود نمایش در صفحات کوچک */
+@media (max-width: 768px) {
+  .dataTables_length,
+  .dataTables_filter,
+  .dataTables_info,
+  .dataTables_paginate {
+    float: none;
+    text-align: center;
+    margin: 5px 0;
+    width: 100%;
+  }
+
+  .dataTables_filter input {
+    width: 150px;
+  }
+}
+
+/* نمایش داده‌های سلول با متن طولانی */
+.dataTables_wrapper table td {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* نمایش متن کامل در هاور */
+.dataTables_wrapper table td:hover {
+  white-space: normal;
+  overflow: visible;
+  word-wrap: break-word;
+  z-index: 1;
+  position: relative;
+  background-color: #f0e0e9;
+}
+
+/* استایل برای column-options */
+.column-selector-container {
+  margin-bottom: 15px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.column-options {
+  padding: 0;
+  max-height: 250px;
+  overflow-y: auto;
+  background: white;
+}
+
+.column-option {
+  padding: 8px 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.2s;
+}
+
+.column-option:hover {
+  background-color: #f9f9fb;
+}
+
+.column-option label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.column-option input[type="checkbox"] {
+  margin-left: 10px;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+  .mainA {
+    flex-direction: column;
+  }
+
+  .righttmainA {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .leftmainA {
+    width: 100%;
+  }
+
+  .etelaeiyeArze {
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  .filter-item {
+    max-width: 100%;
+  }
+}
+
+.activc {
+  background-color: white;
+  color: var(--newbackground-color);
+  border: 2px solid var(--newbackground-color);
+}
+.activee {
+  color: var(--newbackground-color);
+}

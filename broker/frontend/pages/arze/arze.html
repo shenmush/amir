@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اطلاعیه‌های عرضه</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/jalalidatepicker/dist/jalalidatepicker.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/fixedcolumns/4.2.2/css/fixedColumns.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- کتابخانه‌های DataTable buttons -->
+    <link
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      /* استایل برای دکمه‌های اکسپورت */
+      .btn-dt {
+        background-color: white !important;
+        color: #6c1f4b !important;
+        border: 1px solid #6c1f4b !important;
+        border-radius: 8px !important;
+        padding: 5px 10px !important;
+        margin: 0 3px !important;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        cursor: pointer !important;
+        transition: all 0.2s !important;
+      }
+
+      .btn-dt:hover {
+        background-color: #6c1f4b !important;
+        color: white !important;
+      }
+
+      div.dt-buttons {
+        margin: 10px 0;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="toppest-nav">
+      <div id="right-toppest-nav">
+        <ul class="main-menu-right">
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/reports/reports.html">گزارشات</a>
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/raw_data/data.html">داده‌های خام</a>
+          </li>
+          <li class="main-menu-right-items activc">
+            <a class="linkmenu active activee" href="/arze/arze.html"
+              >اطلاعیه عرضه</a
+            >
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/chart/chart.html">نمودارها</a>
+          </li>
+        </ul>
+      </div>
+      <div id="left-toppest-nav">نام کاربری</div>
+    </div>
+    <div class="samane-tahlil">
+      <p class="matnesamane">سامانه تحلیل بورس کالا -> گزارشات اطلاعیه عرضه</p>
+    </div>
+    <div class="etelaeiyeArze">
+      <p class="matneEtelaeiyeArze">انتخاب نوع اطلاعیه عرضه</p>
+      <div class="filter-item">
+        <select id="offerType" class="filter-input">
+          <option value="">نوع اطلاعیه را انتخاب کنید</option>
+          <option value="arzekala">کالا</option>
+          <option value="arzeexport">صادراتی</option>
+          <option value="arzepremium">پرمیوم</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="mainA">
+      <div class="righttmainA">
+        <p class="filterchoosename">اعمال فیلترها</p>
+        <div class="selected-filters" id="selectedFilters" style="display: none">
+          <p class="filtersselection">فیلترهای انتخاب شده</p>
+          <div id="filterSummary"></div>
+        </div>
+        <div class="filter-card" id="filters" style="display: none">
+          <div class="filter-grid">
+            <div class="flexItems">
+              <label for="startDate">از تاریخ</label>
+              <input
+                type="text"
+                id="startDate"
+                class="date-input filter-input"
+                data-jdp
+                value="1390/01/01"
+              />
+            </div>
+            <div class="flexItems">
+              <label for="endDate">تا تاریخ</label>
+              <input
+                type="text"
+                id="endDate"
+                class="date-input filter-input"
+                data-jdp
+                value="1403/01/08"
+              />
+            </div>
+            <div class="flexItems">
+              <label for="bArzehRadifNamadKala">نماد کالا</label>
+              <select
+                id="bArzehRadifNamadKala"
+                class="select2-filter filter-input"
+              >
+                <option value="">نماد کالا</option>
+              </select>
+            </div>
+            <div class="flexItems">
+              <label for="xTolidKonandehSharh">تولیدکننده</label>
+              <select
+                id="xTolidKonandehSharh"
+                class="select2-filter filter-input"
+              >
+                <option value="">تولیدکننده</option>
+              </select>
+            </div>
+            <div class="flexItems" id="talarContainer" style="display: none">
+              <label for="Talar">تالار</label>
+              <select id="Talar" class="select2-filter filter-input">
+                <option value="">تالار</option>
+              </select>
+            </div>
+            <div class="flexItems">
+              <label for="cBrokerSpcName">کارگزار</label>
+              <select id="cBrokerSpcName" class="select2-filter filter-input">
+                <option value="">کارگزار</option>
+              </select>
+            </div>
+          </div>
+          <div class="filter-button-container">
+            <button class="btn btn-primary" onclick="searchData()">
+              اعمال فیلترها
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="leftmainA">
+        <p class="headiing">نمایش نتایج</p>
+
+        <div
+          class="column-selector-container"
+          style="display: none"
+          id="columnSelectorContainer"
+        >
+          <div class="column-selector-title">
+            <span>انتخاب ستون‌های جدول</span>
+            <span class="material-symbols-outlined">keyboard_arrow_down</span>
+          </div>
+          <div class="select-all-option">
+            <label>
+              <input type="checkbox" id="select-all-columns" /> انتخاب همه
+            </label>
+          </div>
+          <div class="column-options" id="column-options"></div>
+        </div>
+
+        <div class="nothingtoshowdiv" id="noSelection">
+          <p class="nothingtoshow">در حال حاضر موردی برای نمایش وجود ندارد</p>
+        </div>
+        <div class="bgshowresult">
+          <div class="loading-overlay" id="loading" style="display: none">
+            <div class="loading-spinner"></div>
+            <p>در حال بارگذاری...</p>
+          </div>
+          <div class="table-container">
+            <table
+              id="dataTable"
+              class="display nowrap"
+              style="width: 100%; display: none"
+            >
+              <thead id="tableHeader"></thead>
+              <tbody id="tableBody"></tbody>
+            </table>
+          </div>
+          <p id="noData" style="display: none">داده‌ای پیدا نشد!</p>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/fixedcolumns/4.2.2/js/dataTables.fixedColumns.min.js"></script>
+    <!-- کتابخانه‌های DataTable buttons -->
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script>
+      const API_BASE_URL = "http://185.213.164.220:8000";
+
+      const fieldTranslations = {
+        id: "شناسه",
+        Attachment: "پیوست",
+        bArzehRadifPK: "شناسه عرضه",
+        cBrokerSpcName: "نام کارگزار",
+        transaction_date: "تاریخ عرضه",
+        bArzehRadifNamadKala: "نماد کالا",
+        bArzehRadifShekl: "شکل محموله",
+        bArzehRadifSize: "اندازه محموله",
+        xTolidKonandehSharh: "تولیدکننده",
+        xMahalTahvilSharh: "محل تحویل",
+        bArzehRadifArzeh: "مقدار عرضه",
+        bArzehRadifMab: "قیمت مبنا",
+        xContractKindSharh: "نوع قرارداد",
+        bArzehRadifTarTahvil: "تاریخ تحویل",
+        bArzehRadifArzehSharh: "توضیحات عرضه",
+        bArzehRadifMaxMahmooleh: "حداکثر محموله",
+        bArzehRadifZaribMahmooleh: "ضریب محموله",
+        bArzehRadifMinMahmooleh: "حداقل محموله",
+        bArzehRadifSumBuyOrders: "مجموع سفارشات خرید",
+        bArzehRadifStatusSharh: "وضعیت",
+        bArzehRadifMinMab: "حداقل قیمت مبنا",
+        bArzehRadifMaxMab: "حداکثر قیمت مبنا",
+        bArzehRadifDarsad: "درصد",
+        bArzehRadifMinArzeh: "حداقل عرضه",
+        bArzehRadifKashfNerkhMinBuy: "حداقل خرید کشف نرخ",
+        bArzehRadifMinTakhsis: "حداقل تخصیص",
+        bArzehRadifMojazTahvilMinTel: "حداقل تحویل مجاز",
+        bArzehRadifVahedAndazegiri: "واحد اندازه‌گیری",
+        bArzehRadifAndazehMahmuleh: "اندازه محموله",
+        bArzehRadifTasviehTypeID: "شناسه نوع تسویه",
+        bArzehRadifTasviehTypeSharh: "نوع تسویه",
+        bArzehRadifTikSize: "اندازه تیک",
+        bArzehRadifArzehAvalieh: "عرضه اولیه",
+        bArzehRadifMaxBasePrice: "حداکثر قیمت پایه",
+        ArzehKonandeh: "عرضه‌کننده",
+        xKalaNamTejari: "نام تجاری کالا",
+        xKalaNamadKala: "نماد تجاری کالا",
+        ArzeshArzeh: "ارزش عرضه",
+        bArzehRadifMaxKharidM: "حداکثر خرید",
+        bArzehRadifTedadMahmooleh: "تعداد محموله",
+        xTolidKonandehPK: "شناسه تولیدکننده",
+        xKala_xGrouhAsliKalaPK: "شناسه گروه اصلی کالا",
+        xKala_xGrouhKalaPK: "شناسه گروه کالا",
+        xKala_xZirGrouhKalaPK: "شناسه زیرگروه کالا",
+        bArzehRadifMode: "حالت عرضه",
+        bArzehRadifBuyMethod: "روش خرید",
+        ModeDescription: "توضیحات حالت",
+        MethodDescription: "توضیحات روش",
+        Currency: "ارز",
+        Unit: "واحد",
+        Talar: "تالار",
+        bArzehRadifPremium: "پریمیوم",
+        PremiumTasviehDate: "تاریخ تسویه پریمیوم",
+        bArzehRadifFinalContractPrepayment: "پیش‌پرداخت قرارداد نهایی",
+        bArzehRadifExtraBasePriceRefrence: "مرجع قیمت پایه",
+        bArzehRadifExtraFinalContractFormula: "فرمول قرارداد نهایی",
+        PrePaymentFinalContract: "پیش‌پرداخت قرارداد نهایی",
+        PremiumPrice: "قیمت پریمیوم",
+        FinalContractType: "نوع قرارداد نهایی",
+        bArzehRadifExtraFinalPremiumContractDate: "تاریخ قرارداد نهایی پریمیوم",
+        FinalContractTasviehType: "نوع تسویه قرارداد نهایی",
+        FinalContractRate: "نرخ قرارداد نهایی",
+        bArzehRadifMinBasePrice: "حداقل قیمت پایه",
+        bArzehRadifKashfNerkhMinBuy1: "حداقل خرید کشف نرخ (اضافی)",
+        bArzehRadifMaxMahmooleh1: "حداکثر محموله (اضافی)",
+        ArzePK: "شناسه عرضه",
+        bArzehRadifNooTahvil: "نوع تحویل",
+        bArzehRadifZamanTahvil: "زمان تحویل",
+        bArzehRadifBazarHadaf: "بازار هدف",
+        bArzehRadifMinTedad: "حداقل تعداد",
+        bArzehRadifNooPardakht: "نوع پرداخت",
+        bArzehRadifNamBank: "نام بانک",
+        Symbol: "نماد",
+        MinMahmooleh: "حداقل محموله",
+        MaxOffer: "حداکثر عرضه",
+      };
+
+      // تابع بهبود یافته updateColumnVisibility
+      function updateColumnVisibility() {
+        if (!dataTable) return;
+
+        const columnOptions = document.getElementById("column-options");
+        if (!columnOptions) return;
+
+        const checkboxes = columnOptions.querySelectorAll(
+          'input[type="checkbox"]'
+        );
+        const selectedColumns = Array.from(checkboxes)
+          .filter((cb) => cb.checked)
+          .map((cb) => cb.dataset.column);
+
+        // ابتدا اسکرول را غیرفعال می‌کنیم تا در حین تغییر ستون‌ها مشکلی پیش نیاید
+        $(".dataTables_scrollHead, .dataTables_scrollBody").css(
+          "overflow",
+          "hidden"
+        );
+
+        // نمایش یا عدم نمایش ستون‌ها
+        let activeColumnCount = 0;
+        dataTable.columns().every(function (index) {
+          const column = dataTable.column(index);
+          const columnId = column.dataSrc();
+          const isVisible = selectedColumns.includes(columnId);
+          column.visible(isVisible);
+
+          if (isVisible) {
+            activeColumnCount++;
+          }
+        });
+
+        // تنظیم عرض ستون‌ها با تأخیر
+        setTimeout(function () {
+          // تنظیم دقیق عرض ستون‌ها قبل از نمایش
+          dataTable.columns.adjust();
+
+          // تنظیم عرض جدول‌های هدر و بدنه به صورت یکسان
+          $(".dataTables_scrollHeadInner").css("width", "100%");
+          $(".dataTables_scrollHeadInner table").css("width", "100%");
+          $(".dataTables_scrollBody table").css("width", "100%");
+
+          // بازگرداندن اسکرول
+          $(".dataTables_scrollHead").css("overflow", "hidden");
+          $(".dataTables_scrollBody").css("overflow-y", "auto");
+          $(".dataTables_scrollBody").css("overflow-x", "auto");
+
+          // تنظیم عرض ستون‌ها بر اساس تعداد
+          if (activeColumnCount > 15) {
+            $(".dataTables_wrapper th, .dataTables_wrapper td").css({
+              "min-width": "100px",
+              "max-width": "150px",
+            });
+          } else if (activeColumnCount > 10) {
+            $(".dataTables_wrapper th, .dataTables_wrapper td").css({
+              "min-width": "120px",
+              "max-width": "200px",
+            });
+          } else {
+            $(".dataTables_wrapper th, .dataTables_wrapper td").css({
+              "min-width": "150px",
+              "max-width": "250px",
+            });
+          }
+
+          // فراخوانی مجدد تنظیم عرض ستون‌ها و رسم جدول
+          dataTable.columns.adjust();
+          dataTable.draw();
+        }, 300);
+      }
+
+      function clearFilters() {
+        $("#bArzehRadifNamadKala").val(null).trigger("change");
+        $("#xTolidKonandehSharh").val(null).trigger("change");
+        $("#Talar").val(null).trigger("change");
+        $("#cBrokerSpcName").val(null).trigger("change");
+        $("#startDate").val("1390/01/01");
+        $("#endDate").val("1403/01/08");
+        lastFilterParams = null;
+        fetchFilters();
+        updateFilterSummary();
+      }
+
+      let dataTable = null;
+      let lastFilterParams = null;
+      let cachedFilters = {};
+
+      function debounce(func, wait) {
+        let timeout;
+        return function (...args) {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+      }
+
+      function updateColumnOptions(allColumns) {
+        const container = document.getElementById("column-options");
+        container.innerHTML = "";
+
+        const defaultColumns = [
+          "transaction_date",
+          "bArzehRadifNamadKala",
+          "xTolidKonandehSharh",
+          "bArzehRadifArzeh",
+          "bArzehRadifMab",
+        ];
+
+        const columnGroups = {
+          "اطلاعات پایه": [
+            "transaction_date",
+            "bArzehRadifNamadKala",
+            "xTolidKonandehSharh",
+          ],
+          "اطلاعات قیمت": [
+            "bArzehRadifMab",
+            "akhBasePrice",
+            "akhPriceMin",
+            "akhPriceMax",
+            "akhPriceAvg",
+            "akhPriceLast",
+          ],
+          "اطلاعات حجم": ["bArzehRadifArzeh", "akhVolMax", "akhVolume"],
+          "اطلاعات تکمیلی": allColumns.filter(
+            (col) =>
+              ![
+                "transaction_date",
+                "bArzehRadifNamadKala",
+                "xTolidKonandehSharh",
+                "bArzehRadifMab",
+                "akhBasePrice",
+                "akhPriceMin",
+                "akhPriceMax",
+                "akhPriceAvg",
+                "akhPriceLast",
+                "bArzehRadifArzeh",
+                "akhVolMax",
+                "akhVolume",
+              ].includes(col)
+          ),
+        };
+
+        Object.entries(columnGroups).forEach(([groupName, columns]) => {
+          if (columns.length === 0) return;
+
+          const groupHeader = document.createElement("div");
+          groupHeader.className = "column-category";
+          groupHeader.textContent = groupName;
+          container.appendChild(groupHeader);
+
+          columns.forEach((column) => {
+            if (!allColumns.includes(column)) return;
+
+            const div = document.createElement("div");
+            div.className = "column-option";
+            div.innerHTML = `
+              <label>
+                ${fieldTranslations[column] || column}
+                <input type="checkbox" 
+                  data-column="${column}" 
+                  ${defaultColumns.includes(column) ? "checked" : ""}>
+              </label>
+            `;
+            container.appendChild(div);
+          });
+        });
+
+        const checkboxes = container.querySelectorAll('input[type="checkbox"]');
+        const allSelected =
+          checkboxes.length ===
+          Array.from(checkboxes).filter((cb) => cb.checked).length;
+        $("#select-all-columns").prop("checked", allSelected);
+
+        $("#select-all-columns")
+          .off("change")
+          .on("change", function () {
+            const isChecked = $(this).prop("checked");
+            $('#column-options input[type="checkbox"]').prop(
+              "checked",
+              isChecked
+            );
+            updateColumnVisibility();
+          });
+
+        $("#column-options")
+          .off("change", 'input[type="checkbox"]')
+          .on("change", 'input[type="checkbox"]', function () {
+            const allCheckboxes = $('#column-options input[type="checkbox"]');
+            const checkedCheckboxes = $(
+              '#column-options input[type="checkbox"]:checked'
+            );
+            $("#select-all-columns").prop(
+              "checked",
+              allCheckboxes.length === checkedCheckboxes.length
+            );
+            updateColumnVisibility();
+          });
+      }
+
+      // Replace existing loadFilters function
+      async function loadFilters() {
+        const offerType = document.getElementById("offerType").value;
+        const filtersDiv = document.getElementById("filters");
+        const talarContainer = document.getElementById("talarContainer");
+        const righttmainA = document.querySelector(".righttmainA");
+        const noSelection = document.getElementById("noSelection");
+        const dataTableEl = document.getElementById("dataTable");
+        const noData = document.getElementById("noData");
+        const columnSelectorContainer = document.getElementById("columnSelectorContainer");
+
+        if (!offerType) {
+          filtersDiv.style.display = "none";
+          righttmainA.style.display = "none";
+          noSelection.style.display = "flex";
+          dataTableEl.style.display = "none";
+          columnSelectorContainer.style.display = "none";
+          noData.style.display = "none";
+          if (dataTable) {
+            dataTable.destroy();
+            dataTable = null;
+          }
+          return;
+        }
+
+        filtersDiv.style.display = "block";
+        righttmainA.style.display = "block";
+        noSelection.style.display = "none";
+        
+        // Show/hide Talar based on offer type
+        talarContainer.style.display = 
+          (offerType === "arzekala" || offerType === "arzeexport") ? "block" : "none";
+
+        // Reset filters and fetch new data
+        lastFilterParams = null;
+        await fetchFilters();
+        updateFilterSummary();
+      }
+
+      async function fetchFilters() {
+        const offerType = document.getElementById("offerType").value;
+        if (!offerType) return;
+
+        const params = new URLSearchParams({
+          start_date: document.getElementById("startDate").value || "",
+          end_date: document.getElementById("endDate").value || "",
+          bArzehRadifNamadKala:
+            document.getElementById("bArzehRadifNamadKala").value || "",
+          xTolidKonandehSharh:
+            document.getElementById("xTolidKonandehSharh").value || "",
+          cBrokerSpcName: document.getElementById("cBrokerSpcName").value || "",
+          unique: "true",
+        });
+
+        if (offerType === "arzekala" || offerType === "arzeexport") {
+          params.append("Talar", document.getElementById("Talar").value || "");
+        }
+
+        const paramString = params.toString();
+        if (lastFilterParams === paramString) return;
+        lastFilterParams = paramString;
+
+        const loading = document.getElementById("loading");
+        loading.style.display = "flex";
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/${offerType}/data?${params}`
+          );
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("API Error:", response.status, errorText);
+            throw new Error(
+              `خطا در دریافت فیلترها: ${response.status} - ${errorText}`
+            );
+          }
+          const data = await response.json();
+          cachedFilters[offerType] = cachedFilters[offerType] || {};
+          cachedFilters[offerType][paramString] = data; // ذخیره در کش با کلید پارامترها
+
+          const currentValues = {
+            bArzehRadifNamadKala: document.getElementById(
+              "bArzehRadifNamadKala"
+            ).value,
+            xTolidKonandehSharh: document.getElementById("xTolidKonandehSharh")
+              .value,
+            Talar: document.getElementById("Talar").value,
+            cBrokerSpcName: document.getElementById("cBrokerSpcName").value,
+          };
+
+          updateSelect(
+            "bArzehRadifNamadKala",
+            data.bArzehRadifNamadKalas || [],
+            currentValues.bArzehRadifNamadKala
+          );
+          updateSelect(
+            "xTolidKonandehSharh",
+            data.xTolidKonandehSharhs || [],
+            currentValues.xTolidKonandehSharh
+          );
+          if (offerType === "arzekala" || offerType === "arzeexport") {
+            updateSelect("Talar", data.Talars || [], currentValues.Talar);
+          } else {
+            updateSelect("Talar", [], "");
+          }
+          updateSelect(
+            "cBrokerSpcName",
+            data.cBrokerSpcNames || [],
+            currentValues.cBrokerSpcName
+          );
+        } catch (error) {
+          console.error("Error fetching filters:", error);
+          document.getElementById("noData").style.display = "block";
+          document.getElementById(
+            "noData"
+          ).textContent = `خطا در دریافت فیلترها: ${error.message}`;
+        } finally {
+          loading.style.display = "none";
+        }
+      }
+
+      function updateSelect(selectId, options, selectedValue) {
+        const $select = $(`#${selectId}`);
+        if ($select.data("select2")) {
+          $select.select2("destroy");
+        }
+        $select.empty().append('<option value="">همه</option>');
+
+        if (options.length === 0) {
+          $select.append(
+            '<option value="" disabled>داده‌ای موجود نیست</option>'
+          );
+        } else {
+          options.forEach((option) => {
+            if (option)
+              $select.append(`<option value="${option}">${option}</option>`);
+          });
+        }
+
+        if (selectedValue && options.includes(selectedValue)) {
+          $select.val(selectedValue);
+        } else {
+          $select.val(""); // ریست کردن مقدار اگر گزینه انتخاب‌شده دیگر معتبر نیست
+        }
+        $select.select2({
+          placeholder: "انتخاب کنید",
+          allowClear: true,
+          dir: "rtl",
+        });
+        $select.trigger("change");
+      }
+
+      async function searchData() {
+        const offerType = document.getElementById("offerType").value;
+        if (!offerType) {
+          alert("لطفاً نوع اطلاعیه را انتخاب کنید!");
+          return;
+        }
+
+        const params = new URLSearchParams({
+          start_date: document.getElementById("startDate").value || "",
+          end_date: document.getElementById("endDate").value || "",
+          bArzehRadifNamadKala:
+            document.getElementById("bArzehRadifNamadKala").value || "",
+          xTolidKonandehSharh:
+            document.getElementById("xTolidKonandehSharh").value || "",
+          cBrokerSpcName: document.getElementById("cBrokerSpcName").value || "",
+          unique: "false",
+        });
+
+        if (offerType === "arzekala" || offerType === "arzeexport") {
+          params.append("Talar", document.getElementById("Talar").value || "");
+        }
+
+        const loading = document.getElementById("loading");
+        loading.style.display = "flex";
+
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/${offerType}/data?${params}`
+          );
+          if (!response.ok) {
+            const errorText = await response.text();
+            console.error("API Error:", response.status, errorText);
+            throw new Error(
+              `خطا در دریافت داده‌ها از سرور: ${response.status} - ${errorText}`
+            );
+          }
+          const data = await response.json();
+          const table = document.getElementById("dataTable");
+          const thead = document.getElementById("tableHeader");
+          const tbody = document.getElementById("tableBody");
+          const noData = document.getElementById("noData");
+          const noSelection = document.getElementById("noSelection");
+
+          tbody.innerHTML = "";
+          thead.innerHTML = "";
+
+          if (!data.filtered_data || data.filtered_data.length === 0) {
+            table.style.display = "none";
+            noData.style.display = "block";
+            noSelection.style.display = "none";
+            noData.textContent =
+              "داده‌ای برای بازه زمانی یا فیلترهای انتخاب‌شده یافت نشد.";
+            if (dataTable) {
+              dataTable.destroy();
+              dataTable = null;
+            }
+          } else {
+            table.style.display = "table";
+            noData.style.display = "none";
+            noSelection.style.display = "none";
+
+            const firstRow = data.filtered_data[0];
+            const headers = Object.keys(firstRow);
+            const headerRow = document.createElement("tr");
+            headers.forEach((key) => {
+              const th = document.createElement("th");
+              th.textContent = fieldTranslations[key] || key;
+              headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            const formattedData = data.filtered_data.map((row) => {
+              const formattedRow = {};
+              headers.forEach((key) => {
+                formattedRow[key] = row[key] || "-";
+              });
+              return formattedRow;
+            });
+
+            const allColumns = headers;
+            const defaultColumns = [
+              "transaction_date",
+              "bArzehRadifNamadKala",
+              "xTolidKonandehSharh",
+              "bArzehRadifArzeh",
+              "bArzehRadifMab",
+            ];
+
+            if (dataTable) {
+              dataTable.destroy();
+              dataTable = null;
+            }
+
+            dataTable = $("#dataTable").DataTable({
+              data: formattedData,
+              columns: allColumns.map((key) => ({
+                title: fieldTranslations[key] || key,
+                data: key,
+                visible: defaultColumns.includes(key),
+              })),
+              language: {
+                processing: "در حال پردازش...",
+                search: "جستجو:",
+                lengthMenu: "نمایش _MENU_ سطر",
+                info: "نمایش _START_ تا _END_ از _TOTAL_ سطر",
+                infoEmpty: "نمایش 0 تا 0 از 0 سطر",
+                infoFiltered: "(فیلتر شده از _MAX_ سطر)",
+                zeroRecords: "هیچ نتیجه‌ای یافت نشد",
+                emptyTable: "هیچ داده‌ای در جدول وجود ندارد",
+                paginate: {
+                  first: "ابتدا",
+                  previous: "قبلی",
+                  next: "بعدی",
+                  last: "انتها",
+                },
+              },
+              responsive: false,
+              scrollX: true,
+              scrollY: "500px",
+              scrollCollapse: true,
+              paging: true,
+              pageLength: 20,
+              lengthMenu: [
+                [10, 20, 30, 50, 100, -1],
+                ["10", "20", "30", "50", "100", "همه"],
+              ],
+              autoWidth: false,
+              columnDefs: [
+                {
+                  targets: "_all",
+                  className: "dt-center",
+                  render: function (data, type, row, meta) {
+                    // نمایش بهتر داده‌ها در سلول‌ها
+                    if (type === "display") {
+                      return (
+                        '<div class="cell-content">' + (data || "-") + "</div>"
+                      );
+                    }
+                    return data;
+                  },
+                },
+              ],
+              dom: '<"html5buttons"B>lfrtip',
+              fixedHeader: true,
+              buttons: [
+                {
+                  extend: "copy",
+                  text: "کپی",
+                  className: "btn-dt",
+                  exportOptions: { columns: ":visible" },
+                },
+                {
+                  extend: "csv",
+                  text: "CSV",
+                  className: "btn-dt",
+                  exportOptions: { columns: ":visible" },
+                },
+                {
+                  extend: "excel",
+                  text: "Excel",
+                  className: "btn-dt",
+                  exportOptions: { columns: ":visible" },
+                },
+                {
+                  extend: "print",
+                  text: "چاپ",
+                  className: "btn-dt",
+                  exportOptions: { columns: ":visible" },
+                  customize: function (win) {
+                    if (!dataTable || dataTable.rows().count() === 0) {
+                      alert("هیچ داده‌ای برای چاپ وجود ندارد.");
+                      return;
+                    }
+
+                    const $body = $(win.document.body);
+
+                    // حذف محتوای پیش‌فرض
+                    $body.empty();
+
+                    // تنظیم استایل‌های اصلی
+                    $body.css({
+                      "font-family": '"Vazirmatn", Arial, sans-serif',
+                      direction: "rtl",
+                      padding: "0",
+                      margin: "0",
+                      background: "#ffffff",
+                    });
+
+                    // اضافه کردن style به head
+                    $(win.document.head).append(`
+                      <style>
+                        @font-face {
+                          font-family: 'Vazirmatn';
+                          src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Regular.woff2') format('woff2');
+                          font-weight: normal;
+                          font-style: normal;
+                          font-display: swap;
+                        }
+                        @font-face {
+                          font-family: 'Vazirmatn';
+                          src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/fonts/webfonts/Vazirmatn-Bold.woff2') format('woff2');
+                          font-weight: bold;
+                          font-style: normal;
+                          font-display: swap;
+                        }
+                        
+                        @media print {
+                          @page {
+                            size: landscape;
+                            margin: 0.6cm;
+                            margin-bottom: 1.2cm;
+                          }
+                        
+                          body {
+                            margin: 0;
+                            padding: 5mm !important;
+                            min-width: 768px;
+                            font-family: 'Vazirmatn', sans-serif !important;
+                            background: #ffffff;
+                            border: 2px solid #6c1f4b;
+                            box-sizing: border-box;
+                          }
+                        
+                          .print-table {
+                            width: 100%;
+                            max-width: 100%;
+                            border-collapse: collapse;
+                            margin: 15px 0;
+                            background-color: #fff;
+                            page-break-inside: auto;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+                            word-wrap: break-word;
+                            overflow: hidden;
+                          }
+                        
+                          .print-table th {
+                            background: linear-gradient(to bottom, #6c1f4b, #4b1438) !important;
+                            color: white !important;
+                            font-weight: 700;
+                            border: 2px solid #333;
+                            padding: 10px;
+                            text-align: center !important;
+                            font-size: 12px;
+                            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+                            white-space: nowrap;
+                            min-width: 40px;
+                          }
+                        
+                          .print-table td {
+                            border: 1px solid #666;
+                            padding: 8px;
+                            text-align: center !important;
+                            font-size: 11px;
+                            color: #333;
+                            word-wrap: break-word;
+                          }
+                        
+                          .print-table tr {
+                            page-break-inside: avoid;
+                            page-break-after: auto;
+                          }
+                        
+                          .print-table tr:nth-child(even) {
+                            background-color: #f9f9fb !important;
+                          }
+                        
+                          .watermark {
+                            position: fixed;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%) rotate(-45deg);
+                            font-size: 65px;
+                            font-weight: 700;
+                            background: linear-gradient(to right, rgba(108, 31, 75, 0.05), rgba(142, 41, 98, 0.05));
+                            -webkit-background-clip: text;
+                            color: transparent;
+                            z-index: -1;
+                            white-space: nowrap;
+                            pointer-events: none;
+                            font-family: 'Vazirmatn', sans-serif !important;
+                            text-transform: uppercase;
+                            letter-spacing: 6px;
+                            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+                          }
+                        
+                          .print-header {
+                            position: relative;
+                            padding: 25px;
+                            border-bottom: 5px solid #6c1f4b;
+                            margin-bottom: 30px;
+                            background: linear-gradient(to bottom, #f8f9fa, #f0e0e9);
+                            border-radius: 12px;
+                            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+                          }
+                        
+                          .print-header .logo {
+                            position: absolute;
+                            top: 15px;
+                            right: 15px;
+                            width: 100px;
+                            height: 100px;
+                            background-color: #ddd;
+                            border-radius: 12px;
+                            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+                          }
+                        
+                          .print-header .title-info {
+                            text-align: center;
+                          }
+                        
+                          .print-header h1 {
+                            font-size: 30px;
+                            font-weight: 700;
+                            margin: 0 0 15px 0;
+                            color: #6c1f4b;
+                            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+                          }
+                        
+                          .print-header .info {
+                            font-size: 14px;
+                            color: #333;
+                            font-weight: 500;
+                            line-height: 1.6;
+                          }
+                        
+                          .print-filters {
+                            display: grid;
+                            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+                            gap: 12px;
+                            justify-content: center;
+                            margin: 20px 0;
+                            padding: 15px;
+                            background-color: #f0e0e9;
+                            border-radius: 12px;
+                            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+                          }
+                        
+                          .print-filters div {
+                            background: #ffffff;
+                            padding: 8px 15px;
+                            border-radius: 8px;
+                            border: 1px solid #6c1f4b;
+                            font-size: 12px;
+                            color: #6c1f4b;
+                            font-weight: 500;
+                            text-align: center;
+                          }
+                        
+                          .print-footer {
+                            position: fixed;
+                            bottom: 0;
+                            left: 0;
+                            right: 0;
+                            text-align: center;
+                            padding: 15px;
+                            font-size: 10px;
+                            border-top: 4px solid #6c1f4b;
+                            background: linear-gradient(to top, #f8f9fa, #f0e0e9);
+                            color: #333;
+                            box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.15);
+                          }
+                        
+                          .print-footer .page-number {
+                            display: block;
+                            margin-top: 8px;
+                            font-size: 9px;
+                            font-weight: 500;
+                          }
+                        }
+                      </style>
+                    `);
+
+                    // اطلاعات فیلترها
+                    const startDate = $("#startDate").val() || "";
+                    const endDate = $("#endDate").val() || "";
+                    const bArzehRadifNamadKala =
+                      $("#bArzehRadifNamadKala").val() || "";
+                    const xTolidKonandehSharh =
+                      $("#xTolidKonandehSharh").val() || "";
+                    const Talar = $("#Talar").val() || "";
+                    const cBrokerSpcName = $("#cBrokerSpcName").val() || "";
+                    const offerType = $("#offerType").val() || "";
+
+                    let offerTypeText = "";
+                    switch (offerType) {
+                      case "arzekala":
+                        offerTypeText = "کالا";
+                        break;
+                      case "arzeexport":
+                        offerTypeText = "صادراتی";
+                        break;
+                      case "arzepremium":
+                        offerTypeText = "پرمیوم";
+                        break;
+                      default:
+                        offerTypeText = "";
+                    }
+
+                    // تاریخ کنونی
+                    const today = new Date();
+                    const persianDate = `${1402}/${String(
+                      today.getMonth() + 1
+                    ).padStart(2, "0")}/${String(today.getDate()).padStart(
+                      2,
+                      "0"
+                    )}`;
+
+                    // متن واترمارک
+                    const watermarkText = "سامانه تحلیل بورس کالا";
+
+                    // هدر صفحه
+                    const headerHtml = `
+                      <div class="print-header">
+                        <div class="logo"></div>
+                        <div class="title-info">
+                          <h1>گزارش اطلاعیه عرضه ${offerTypeText}</h1>
+                          <div class="info">
+                            تاریخ گزارش: ${persianDate}<br>
+                            کاربر: نام کاربری
+                          </div>
+                        </div>
+                      </div>
+                    `;
+
+                    // بخش فیلترها
+                    let filtersHtml = '<div class="print-filters">';
+                    if (startDate)
+                      filtersHtml += `<div>از تاریخ: ${startDate}</div>`;
+                    if (endDate)
+                      filtersHtml += `<div>تا تاریخ: ${endDate}</div>`;
+                    if (bArzehRadifNamadKala)
+                      filtersHtml += `<div>نماد کالا: ${bArzehRadifNamadKala}</div>`;
+                    if (xTolidKonandehSharh)
+                      filtersHtml += `<div>تولیدکننده: ${xTolidKonandehSharh}</div>`;
+                    if (
+                      Talar &&
+                      (offerType === "arzekala" || offerType === "arzeexport")
+                    )
+                      filtersHtml += `<div>تالار: ${Talar}</div>`;
+                    if (cBrokerSpcName)
+                      filtersHtml += `<div>کارگزار: ${cBrokerSpcName}</div>`;
+                    filtersHtml += "</div>";
+
+                    // بخش واترمارک
+                    const watermarkHtml = `<div class="watermark">${watermarkText}</div>`;
+
+                    // بخش فوتر
+                    const footerHtml = `
+                      <div class="print-footer">
+                        سامانه تحلیل بورس کالا - تمامی حقوق محفوظ است
+                        <div class="page-number"></div>
+                      </div>
+                    `;
+
+                    // ایجاد جدول
+                    let tableHtml = '<table class="print-table">';
+
+                    // ستون‌های قابل نمایش
+                    const visibleColumns = dataTable
+                      .columns(":visible")
+                      .indexes()
+                      .toArray();
+
+                    // هدر جدول
+                    tableHtml += "<thead><tr>";
+                    visibleColumns.forEach((idx) => {
+                      const columnName = dataTable
+                        .column(idx)
+                        .header().textContent;
+                      tableHtml += `<th>${columnName}</th>`;
+                    });
+                    tableHtml += "</tr></thead>";
+
+                    // بدنه جدول
+                    tableHtml += "<tbody>";
+                    const rows = dataTable
+                      .rows({ search: "applied" })
+                      .data()
+                      .toArray();
+                    rows.forEach((row) => {
+                      tableHtml += "<tr>";
+                      visibleColumns.forEach((idx) => {
+                        const columnData =
+                          row[dataTable.column(idx).dataSrc()] || "-";
+                        tableHtml += `<td>${columnData}</td>`;
+                      });
+                      tableHtml += "</tr>";
+                    });
+                    tableHtml += "</tbody></table>";
+
+                    // اضافه کردن همه اجزا به صفحه
+                    $body.append(
+                      headerHtml +
+                        filtersHtml +
+                        watermarkHtml +
+                        tableHtml +
+                        footerHtml
+                    );
+
+                    // شماره‌گذاری صفحات
+                    setTimeout(() => {
+                      const pagesCount = Math.ceil(
+                        $(win.document).height() / win.innerHeight
+                      );
+                      $(".print-footer .page-number").text(
+                        `صفحه 1 از ${pagesCount}`
+                      );
+                    }, 500);
+                  },
+                },
+              ],
+              initComplete: function () {
+                updateColumnOptions(allColumns);
+                $("#columnSelectorContainer").show();
+
+                // اطمینان از تنظیم صحیح عرض‌ها
+                this.api().columns.adjust();
+
+                // مخفی کردن موقت اسکرول برای اجتناب از مشکلات بصری
+                $(".dataTables_scrollHead, .dataTables_scrollBody").css(
+                  "overflow",
+                  "hidden"
+                );
+
+                // تنظیم مجدد عرض‌ها بعد از بارگذاری کامل
+                setTimeout(() => {
+                  this.api().columns.adjust();
+                  $(".dataTables_scrollHeadInner").width("100%");
+                  $(".dataTables_scrollHeadInner table").width("100%");
+                  $(".dataTables_scrollBody table").width("100%");
+                  $(".dataTables_scrollHead").css("overflow", "hidden");
+                  $(".dataTables_scrollBody").css("overflow-y", "auto");
+                  $(".dataTables_scrollBody").css("overflow-x", "auto");
+                }, 500);
+              },
+            });
+          }
+
+          updateFilterSummary();
+        } catch (error) {
+          console.error("Error searching data:", error);
+          document.getElementById("noData").style.display = "block";
+          document.getElementById(
+            "noData"
+          ).textContent = `خطا در ارتباط با سرور: ${error.message}`;
+        } finally {
+          loading.style.display = "none";
+        }
+      }
+
+      function updateFilterSummary() {
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+        const bArzehRadifNamadKala = document.getElementById(
+          "bArzehRadifNamadKala"
+        ).value;
+        const xTolidKonandehSharh = document.getElementById(
+          "xTolidKonandehSharh"
+        ).value;
+        const Talar = document.getElementById("Talar").value;
+        const cBrokerSpcName = document.getElementById("cBrokerSpcName").value;
+        const offerType = document.getElementById("offerType").value;
+
+        const filterSummary = document.getElementById("filterSummary");
+        const selectedFiltersDiv = document.getElementById("selectedFilters");
+        filterSummary.innerHTML = "";
+
+        const filters = [];
+
+        if (startDate) {
+          filters.push(`تاریخ شروع: ${startDate}`);
+        }
+        if (endDate) {
+          filters.push(`تاریخ پایان: ${endDate}`);
+        }
+        if (bArzehRadifNamadKala) {
+          filters.push(`نماد کالا: ${bArzehRadifNamadKala}`);
+        }
+        if (xTolidKonandehSharh) {
+          filters.push(`تولیدکننده: ${xTolidKonandehSharh}`);
+        }
+        if (Talar && (offerType === "arzekala" || offerType === "arzeexport")) {
+          filters.push(`تالار: ${Talar}`);
+        }
+        if (cBrokerSpcName) {
+          filters.push(`کارگزار: ${cBrokerSpcName}`);
+        }
+
+        if (filters.length > 0) {
+          selectedFiltersDiv.style.display = "block";
+          filters.forEach((filter) => {
+            const span = document.createElement("span");
+            span.textContent = filter;
+            span.className = "filter-tag";
+            filterSummary.appendChild(span);
+          });
+        } else {
+          selectedFiltersDiv.style.display = "none";
+        }
+      }
+
+      $(document).ready(function () {
+        $(".date-input").each(function () {
+          $(this).removeAttr("data-jdp");
+          $(this).attr("placeholder", "مثال: 1401/06/31");
+        });
+
+        $(".date-input").on("keypress", function (e) {
+          const key = e.key;
+          if (
+            !/[\d\/]/.test(key) &&
+            key !== "Backspace" &&
+            key !== "Delete" &&
+            key !== "ArrowLeft" &&
+            key !== "ArrowRight" &&
+            key !== "Tab"
+          ) {
+            e.preventDefault();
+          }
+        });
+
+        $(".date-input").on("blur", function () {
+          const value = $(this).val();
+          if (
+            value &&
+            !/^1[3-4]\d{2}\/(0[1-9]|1[0-2])\/(0[1-9]|[12]\d|3[01])$/.test(value)
+          ) {
+            alert("لطفاً تاریخ را در فرمت صحیح وارد کنید (مثال: 1401/06/31)");
+            $(this).val($(this).data("last-valid") || "");
+          } else {
+            $(this).data("last-valid", value);
+          }
+        });
+
+        $("#offerType").select2({
+          placeholder: "نوع اطلاعیه را انتخاب کنید",
+          allowClear: true,
+          dir: "rtl",
+        });
+
+        $(".select2-filter").select2({
+          placeholder: "انتخاب کنید",
+          allowClear: true,
+          dir: "rtl",
+        });
+
+        $("#offerType").on("change", function () {
+          lastFilterParams = null;
+          cachedFilters = {};
+          loadFilters();
+        });
+
+        const debouncedFetchFilters = debounce(fetchFilters, 300);
+        $(
+          "#startDate, #endDate, #bArzehRadifNamadKala, #xTolidKonandehSharh, #Talar, #cBrokerSpcName"
+        ).on("change", function () {
+          debouncedFetchFilters();
+          updateFilterSummary();
+        });
+
+        $(
+          "#startDate, #endDate, #bArzehRadifNamadKala, #xTolidKonandehSharh, #Talar, #cBrokerSpcName"
+        ).on("keypress", function (e) {
+          if (e.key === "Enter") {
+            searchData();
+          }
+        });
+
+        $(".clear-filters").remove();
+
+        $("<div>")
+          .addClass("filter-button-container")
+          .css({
+            "margin-top": "20px",
+            display: "flex",
+            "flex-direction": "column",
+            gap: "15px",
+          })
+          .append(
+            $("<button>", {
+              text: "حذف همه فیلترها",
+              class: "btn btn-secondary clear-filters",
+              click: function () {
+                $("#bArzehRadifNamadKala").val(null).trigger("change");
+                $("#xTolidKonandehSharh").val(null).trigger("change");
+                $("#Talar").val(null).trigger("change");
+                $("#cBrokerSpcName").val(null).trigger("change");
+                $("#startDate").val("1390/01/01");
+                $("#endDate").val("1403/01/08");
+                lastFilterParams = null;
+                fetchFilters();
+                updateFilterSummary();
+              },
+            })
+          )
+          .insertAfter(".filter-grid");
+
+        $(".column-selector-title").click(function () {
+          $(this).toggleClass("active");
+          const $options = $(this).parent().find(".column-options");
+          $options.slideToggle(300);
+        });
+
+        $(document).on("change", "#select-all-columns", function () {
+          const isChecked = $(this).prop("checked");
+          $('#column-options input[type="checkbox"]').prop(
+            "checked",
+            isChecked
+          );
+          if (dataTable) {
+            updateColumnVisibility();
+          }
+        });
+
+        $(document).on(
+          "click",
+          '#select-all-columns, .column-option input[type="checkbox"]',
+          function () {
+            setTimeout(function () {
+              $(window).trigger("resize");
+              const tableWidth = $(".dataTables_scrollBody table").width();
+              const containerWidth = $(".dataTables_scrollBody").width();
+
+              if (tableWidth > containerWidth) {
+                $(".dataTables_scrollBody").css({
+                  "overflow-x": "scroll",
+                  "min-width": "100%",
+                });
+              }
+            }, 200);
+          }
+        );
+
+        $(window).on("resize", function () {
+          if (dataTable) {
+            dataTable.columns.adjust();
+          }
+        });
+
+        $(window).on("resize", function () {
+          if (dataTable) {
+            setTimeout(function () {
+              const tableWidth = $(".dataTables_scrollBody table").width();
+              const containerWidth = $(".dataTables_scrollBody").width();
+
+              if (tableWidth > containerWidth) {
+                $(".table-container").addClass("has-horizontal-scroll");
+              } else {
+                $(".table-container").removeClass("has-horizontal-scroll");
+              }
+            }, 100);
+          }
+        });
+
+        $(".dataTables_scrollBody").on("scroll", function () {
+          const scrollLeft = $(this).scrollLeft();
+          const maxScrollLeft = $(this)[0].scrollWidth - $(this).width();
+
+          if (scrollLeft === 0) {
+            $(".table-container").addClass("at-start");
+            $(".table-container").removeClass("at-end");
+          } else if (scrollLeft >= maxScrollLeft - 5) {
+            $(".table-container").removeClass("at-start");
+            $(".table-container").addClass("at-end");
+          } else {
+            $(".table-container").removeClass("at-start");
+            $(".table-container").removeClass("at-end");
+          }
+        });
+
+        $(document).on(
+          "change",
+          '#column-options input[type="checkbox"]',
+          function () {
+            const checkboxes = $(
+              '#column-options input[type="checkbox"]:checked'
+            );
+            if (checkboxes.length > 8 && dataTable) {
+              if (!dataTable.settings()[0]._fixedColumns) {
+                new $.fn.dataTable.FixedColumns(dataTable, {
+                  leftColumns: 2,
+                });
+              }
+            }
+
+            setTimeout(function () {
+              if (dataTable) {
+                dataTable.columns.adjust();
+                dataTable.draw();
+              }
+            }, 500);
+          }
+        );
+      });
+    </script>
+  </body>
+</html>
