@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl"></html>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>tabe nemoodarha</title>
+    <script src="https://code.highcharts.com/stock/11.2.0/highstock.js"></script>
+
+    <!-- ماژول‌های ضروری -->
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/data.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/drag-panes.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/annotations.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/annotations-advanced.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/price-indicator.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/full-screen.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/stock-tools.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/indicators/indicators-all.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/accessibility.js"></script>
+
+    <!-- ماژول‌های صادرات -->
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/stock/11.2.0/modules/export-data.js"></script>
+
+    <!-- استایل‌های ضروری -->
+    <link rel="stylesheet" href="https://code.highcharts.com/11.2.0/css/stocktools/gui.css">
+    <link rel="stylesheet" href="https://code.highcharts.com/11.2.0/css/annotations/popup.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.9.2/build/moment-jalaali.js"></script>
+
+    <style>
+      .highcharts-container,
+      .highcharts-stocktools-wrapper,
+      .highcharts-bindings-wrapper {
+          pointer-events: auto !important;
+          z-index: 2000 !important;
+      }
+      .highcharts-menu-wrapper,
+      .highcharts-menu {
+          z-index: 2010 !important;
+      }
+      #chartContainer {
+          position: relative;
+          z-index: 1000 !important;
+      }
+    </style>
+
+  </head>
+  <body>
+    <div id="toppest-nav">
+        <div id="right-toppest-nav">
+            <ul class="main-menu-right">
+                <li class="main-menu-right-items"><a class="linkmenu" href="/reports/reports.html">گزارشات</a></li>
+                <li class="main-menu-right-items"><a class="linkmenu" href="/raw_data/data.html">داده‌های خام</a></li>
+                <li class="main-menu-right-items"><a class="linkmenu" href="/arze/arze.html">اطلاعیه عرضه</a></li>
+                <li class="main-menu-right-items"><a class="linkmenu active" href="/chart/chart.html">نمودارها</a></li>
+            </ul>
+        </div>
+        <div id="left-toppest-nav">نام کاربری</div>
+        
+    </div>
+    <div class="samane-tahlil">
+      <p class="matnesamane">سامانه تحلیل بورس کالا->نمودارها</p>
+    </div>
+    <div class="main-container">
+      <div class="r-part">
+        <div class="containernamefilter">
+        <h3 class="filternamechoose">انتخاب فیلترها</h3>
+        </div>
+
+        <div class="filters">
+          <div class="filter-group">
+            <div class="filter-item">
+              <label></label>
+              <select id="marketFilter">
+                <option class="filterstyleset" value=""> تالار</option>
+              </select>
+            </div>
+  
+            <div class="filter-item">
+              <label></label>
+              <select id="producerFilter">
+                <option class="filterstyleset" value=""> تولیدکننده</option>
+              </select>
+            </div>
+  
+            <div class="filter-item">
+              <label></label>
+              <select id="productFilter">
+                <option class="filterstyleset" value=""> محصول</option>
+              </select>
+            </div>
+  
+            <div class="filter-item">
+              <label></label>
+              <select id="contractTypeFilter">
+                <option class="filterstyleset" value=""> نوع قرارداد</option>
+              </select>
+            </div>
+  
+            <div class="filter-item">
+              <label></label>
+              <select id="chartTypeFilter">
+                <option class="filterstyleset" value="candlestick">شمعی</option>
+                <option value="line">خطی (میانگین وزنی)</option>
+              </select>
+            </div>
+          </div>
+
+      </div>
+      <div class="filter-actions">
+        <button id="applyFilters" "> اعمال فیلترها </button>
+      </div>
+    </div>
+    <div class="l-part"> 
+        <div class="selected-filters">
+            <h3>فیلترهای انتخاب‌شده</h3>
+            <div id="filterSummary"></div>
+        </div>
+        <p class="resu">نمایش نتایج</p>
+        <div class="header-info">
+          <p class="num1">آخرین به‌روزرسانی: <span id="lastUpdate"></span></p>
+          <p class="num2">کاربر: <span id="currentUser"></span></p>
+        </div>
+       
+     
+
+      <div class="showingTables">
+      <p class="tblshow">بخش نمودار</p>
+      <div id="stockToolsDiv"></div>
+      <div id="chartContainer"></div>
+      </div>
+
+      <button id="toggleTable" class="btn1 infoshowbtn">بخش جدول معاملات</button>
+      <div
+        id="dataTableContainer"
+        class="data-table-container"
+        style="display: none"
+      ></div>
+    </div>
+    <div class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <span class="loading-text">در حال بارگذاری...</span>
+    </div>
+
+    <!-- 
+<!--
+    <button id="toggleTable" class="btn">نمایش جدول معاملات</button>
+    <div id="dataTableContainer" class="data-table-container" style="display: none;"></div>
+  </div>
+    </div> -->
+    
+    <!-- پارت اصلی-->
+    <script>
+      // تنظیم متغیرهای سراسری
+      let chart;
+      let rawData = [];
+      const currentUser = "AmirMohammadSalimi";
+      const currentDateTime = "2025-02-21 07:38:39";
+      
+      let currentFilters = {
+        market: "",
+        producer: "",
+        product: "",
+        contractType: "",
+        chartType: "candlestick"
+      };
+
+      let marketData = {
+        producers: [],
+        products: [],
+        contractTypes: []
+      };
+
+      // توابع کمکی
+    function showLoading() {
+        const loadingElement = document.querySelector('.loading-overlay');
+        if (loadingElement) {
+            loadingElement.style.display = 'flex';
+        } else {
+            console.warn('Loading element not found');
+        }
+    }
+
+    function hideLoading() {
+        const loadingElement = document.querySelector('.loading-overlay');
+        if (loadingElement) {
+            loadingElement.style.display = 'none';
+        } else {
+            console.warn('Loading element not found');
+        }
+    }
+
+      function updateLastUpdateTime() {
+        document.getElementById("lastUpdate").textContent = new Date(currentDateTime).toLocaleString("fa-IR");
+        document.getElementById("currentUser").textContent = currentUser;
+      }
+
+      function removeDuplicates(array) {
+        if (!Array.isArray(array)) return [];
+        return [...new Set(array)].filter(item => item != null && item !== undefined && item !== "");
+      }
+
+      // تنظیم Select2
+      function initializeSelect2() {
+        $("#marketFilter, #producerFilter, #productFilter, #contractTypeFilter, #chartTypeFilter").select2({
+            dir: "rtl",
+            width: "220px", /* عرض ثابت */
+            language: {
+            noResults: function() {
+                return "موردی یافت نشد";
+            }
+          }
+        });
+      }
+
+      // مدیریت فیلترهای وابسته
+      async function loadMarkets() {
+        try {
+            showLoading();
+            const response = await fetch("http://185.213.164.220:8000/markets/data?unique=true");
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const data = await response.json();
+
+            if (data.markets && Array.isArray(data.markets)) {
+                const uniqueMarkets = removeDuplicates(data.markets);
+                const marketSelect = $("#marketFilter");
+                marketSelect.empty().append('<option value="">انتخاب تالار</option>');
+
+                uniqueMarkets.forEach(market => {
+                    marketSelect.append(new Option(market, market));
+                });
+            }
+        } catch (error) {
+            console.error("خطا در دریافت لیست تالارها:", error);
+            showError("خطا در دریافت لیست تالارها. لطفاً صفحه را مجدداً بارگذاری کنید.");
+        } finally {
+            hideLoading();
+        }
+    }
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.textContent = message;
+        document.body.appendChild(errorDiv);
+        
+        // حذف پیام خطا بعد از 5 ثانیه
+        setTimeout(() => {
+            errorDiv.remove();
+        }, 5000);
+    }
+
+      async function handleMarketChange() {
+        const selectedMarket = $("#marketFilter").val();
+        currentFilters.market = selectedMarket;
+
+        if (!selectedMarket) {
+          resetFilters();
+          return;
+        }
+
+        showLoading();
+        try {
+          const response = await fetch(`http://185.213.164.220:8000/markets/data?market=${encodeURIComponent(selectedMarket)}&unique=true`);
+          const data = await response.json();
+
+          if (data) {
+            marketData.producers = removeDuplicates(data.producers || []);
+            marketData.products = [];
+            marketData.contractTypes = [];
+
+            updateProducerSelect();
+            updateProductSelect();
+            updateContractTypeSelect();
+          }
+        } catch (error) {
+          console.error("خطا در دریافت داده‌های تالار:", error);
+        } finally {
+          hideLoading();
+        }
+      }
+
+      async function handleProducerChange() {
+        const selectedProducer = $("#producerFilter").val();
+        currentFilters.producer = selectedProducer;
+
+        if (!selectedProducer) {
+            if (currentFilters.market) {
+                const url = new URL("http://185.213.164.220:8000/markets/data");
+                url.searchParams.append("market", currentFilters.market);
+                url.searchParams.append("unique", "true");
+                
+                try {
+                    const response = await fetch(url);
+                    const data = await response.json();
+                    if (data && data.product_names) { // تغییر از products به product_names
+                        marketData.products = removeDuplicates(data.product_names);
+                    }
+                } catch (error) {
+                    console.error("خطا در بازیابی محصولات تالار:", error);
+                }
+            } else {
+                marketData.products = [];
+            }
+            marketData.contractTypes = [];
+            updateProductSelect();
+            updateContractTypeSelect();
+            return;
+        }
+
+        showLoading();
+        try {
+            const url = new URL("http://185.213.164.220:8000/markets/data");
+            if (currentFilters.market) {
+                url.searchParams.append("market", currentFilters.market);
+            }
+            url.searchParams.append("producer", selectedProducer);
+            url.searchParams.append("unique", "true");
+
+            console.log("درخواست API برای تولیدکننده:", url.toString());
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            console.log("داده‌های دریافتی برای تولیدکننده:", data);
+
+            if (data) {
+                // تغییر از products به product_names
+                if (data.product_names) {
+                    marketData.products = removeDuplicates(data.product_names);
+                    console.log("محصولات فیلتر شده:", marketData.products);
+                } else {
+                    console.warn("هیچ محصولی برای این تولیدکننده یافت نشد");
+                    marketData.products = [];
+                }
+                
+                marketData.contractTypes = [];
+                updateProductSelect();
+                updateContractTypeSelect();
+            }
+        } catch (error) {
+            console.error("خطا در دریافت داده‌های تولیدکننده:", error);
+            marketData.products = [];
+            marketData.contractTypes = [];
+            updateProductSelect();
+            updateContractTypeSelect();
+        } finally {
+            hideLoading();
+        }
+    }
+
+    async function handleProductChange() {
+        const selectedProduct = $("#productFilter").val();
+        currentFilters.product = selectedProduct;
+
+        if (!selectedProduct) {
+            marketData.contractTypes = [];
+            updateContractTypeSelect();
+            return;
+        }
+
+        showLoading();
+        try {
+            const url = new URL("http://185.213.164.220:8000/markets/data");
+            if (currentFilters.market) url.searchParams.append("market", currentFilters.market);
+            if (currentFilters.producer) url.searchParams.append("producer", currentFilters.producer);
+            url.searchParams.append("product_name", selectedProduct);
+            url.searchParams.append("unique", "true");
+
+            console.log("درخواست API برای محصول:", url.toString());
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            console.log("داده‌های دریافتی برای محصول:", data);
+
+            if (data && data.contract_types) {
+                marketData.contractTypes = removeDuplicates(data.contract_types);
+                console.log("انواع قرارداد فیلتر شده:", marketData.contractTypes);
+            } else {
+                console.warn("هیچ نوع قراردادی برای این محصول یافت نشد");
+                marketData.contractTypes = [];
+            }
+            
+            updateContractTypeSelect();
+        } catch (error) {
+            console.error("خطا در فیلتر محصولات:", error);
+            marketData.contractTypes = [];
+            updateContractTypeSelect();
+        } finally {
+            hideLoading();
+        }
+    }
+
+    async function handleContractTypeChange() {
+        const selectedContractType = $("#contractTypeFilter").val();
+        currentFilters.contractType = selectedContractType;
+    }
+
+    function updateProducerSelect(selectedValue = "") {
+        const producerSelect = $("#producerFilter");
+        producerSelect.empty().append('<option value="">انتخاب تولیدکننده</option>');
+
+        if (marketData.producers && marketData.producers.length) {
+            marketData.producers.forEach(producer => {
+                if (producer) {
+                    producerSelect.append(new Option(producer, producer));
+                }
+            });
+
+            if (selectedValue && marketData.producers.includes(selectedValue)) {
+                producerSelect.val(selectedValue);
+            }
+        }
+        producerSelect.trigger("change");
+    }
+
+    function updateProductSelect(selectedValue = "") {
+        const productSelect = $("#productFilter");
+        
+        console.log("به‌روزرسانی لیست محصولات با:", marketData.products);
+        
+        // پاک کردن و اضافه کردن گزینه پیش‌فرض
+        productSelect.empty().append('<option value="">انتخاب محصول</option>');
+
+        // افزودن محصولات جدید
+        if (marketData.products && marketData.products.length > 0) {
+            marketData.products.forEach(product => {
+                if (product) {
+                    productSelect.append(new Option(product, product));
+                }
+            });
+
+            // انتخاب مقدار قبلی اگر هنوز معتبر است
+            if (selectedValue && marketData.products.includes(selectedValue)) {
+                productSelect.val(selectedValue);
+            }
+        }
+
+        // تریگر رویداد change برای به‌روزرسانی وابستگی‌ها
+        productSelect.trigger("change");
+        
+        // ریفرش Select2
+        productSelect.select2({
+            dir: "rtl",
+            language: {
+                noResults: function() {
+                    return "موردی یافت نشد";
+                }
+            }
+        });
+    }
+
+    function updateContractTypeSelect(selectedValue = "") {
+        const contractTypeSelect = $("#contractTypeFilter");
+        contractTypeSelect.empty().append('<option value="">انتخاب نوع قرارداد</option>');
+
+        if (marketData.contractTypes && marketData.contractTypes.length) {
+            marketData.contractTypes.forEach(contractType => {
+                if (contractType) {
+                    contractTypeSelect.append(new Option(contractType, contractType));
+                }
+            });
+
+            if (selectedValue && marketData.contractTypes.includes(selectedValue)) {
+                contractTypeSelect.val(selectedValue);
+            }
+        }
+        contractTypeSelect.trigger("change");
+    }
+
+    function resetFilters() {
+        $("#producerFilter").empty().append('<option value="">انتخاب تولیدکننده</option>').trigger("change");
+        $("#productFilter").empty().append('<option value="">انتخاب محصول</option>').trigger("change");
+        $("#contractTypeFilter").empty().append('<option value="">انتخاب نوع قرارداد</option>').trigger("change");
+        currentFilters = {
+            market: "",
+            producer: "",
+            product: "",
+            contractType: "",
+            chartType: currentFilters.chartType
+        };
+        rawData = [];
+    }
+
+    function handleChartTypeChange() {
+        currentFilters.chartType = $("#chartTypeFilter").val();
+        if (rawData.length > 0) {
+            updateChart(rawData);
+        }
+    }
+
+    function processChartData(data) {
+        if (!Array.isArray(data) || data.length === 0) {
+            return { ohlc: [], volume: [] };
+        }
+
+        const groupedData = data.reduce((acc, item) => {
+            if (!item.transaction_date) return acc;
+            const date = new Date(item.transaction_date);
+            const dateKey = Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate());
+
+            if (!acc[dateKey]) {
+                acc[dateKey] = {
+                    timestamp: dateKey,
+                    data: []
+                };
+            }
+            acc[dateKey].data.push(item);
+            return acc;
+        }, {});
+
+        const ohlc = [];
+        const volume = [];
+
+        Object.values(groupedData).forEach(group => {
+            let dayData = group.data;
+            let openPrice = parseFloat(dayData[0].lowest_price) || parseFloat(dayData[0].base_price);
+            let highPrice = Math.max(...dayData.map(item => parseFloat(item.highest_price) || parseFloat(item.base_price)));
+            let lowPrice = Math.min(...dayData.map(item => parseFloat(item.base_price)));
+            let closePrice = parseFloat(dayData[dayData.length - 1].highest_price) || parseFloat(dayData[dayData.length - 1].base_price);
+            let volumeSum = dayData.reduce((sum, item) => sum + (parseFloat(item.contract_volume) || 0), 0);
+
+            ohlc.push([
+                group.timestamp,
+                openPrice,
+                highPrice,
+                lowPrice,
+                closePrice
+            ]);
+
+            volume.push([
+                group.timestamp,
+                volumeSum
+            ]);
+        });
+
+        return {
+            ohlc: ohlc.sort((a, b) => a[0] - b[0]),
+            volume: volume.sort((a, b) => a[0] - b[0])
+        };
+    }
+
+    function createChart() {
+      Highcharts.setOptions({
+          // تنظیمات کلی برای همه نمودارها
+          colors: [
+              '#2196F3', // آبی
+              '#4CAF50', // سبز
+              '#FFC107', // نارنجی
+              '#E91E63', // صورتی
+              '#9C27B0', // بنفش
+              '#00BCD4', // آبی روشن
+              '#FF5722', // نارنجی پررنگ
+              '#795548'  // قهوه‌ای
+          ],
+          chart: {
+              style: {
+                  fontFamily: 'Vazirmatn'
+              }
+          }
+      });
+
+      chart = Highcharts.stockChart('chartContainer', {
+          chart: {
+              backgroundColor: {
+                  linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
+                  stops: [
+                      [0, '#f8f9fa'],
+                      [1, '#ffffff']
+                  ]
+              },
+              style: {
+                  fontFamily: 'Vazirmatn'
+              },
+              events: {
+                  load: function() {
+                      //this.showLoading('');
+                  }
+              },
+              borderRadius: 8,
+              plotBorderColor: '#e8e8e8',
+              plotBorderWidth: 1
+          },
+
+          // تنظیمات نوار ابزار
+          navigator: {
+              enabled: true,
+              outlineColor: '#e8e8e8',
+              outlineWidth: 1,
+              handles: {
+                  backgroundColor: '#fff',
+                  borderColor: '#2196F3'
+              },
+              series: {
+                  color: '#90CAF9',
+                  lineWidth: 1
+              }
+          },
+
+          // تنظیمات اسکرول‌بار
+          scrollbar: {
+              enabled: true,
+              barBackgroundColor: '#e8e8e8',
+              barBorderRadius: 4,
+              barBorderWidth: 0,
+              buttonBackgroundColor: '#e8e8e8',
+              buttonBorderWidth: 0,
+              buttonBorderRadius: 4,
+              trackBackgroundColor: '#f8f9fa',
+              trackBorderWidth: 0,
+              trackBorderRadius: 4
+          },
+
+          // انتخاب‌کننده بازه زمانی
+          rangeSelector: {
+              buttonTheme: {
+                  fill: '#fff',
+                  stroke: '#e8e8e8',
+                  'stroke-width': 1,
+                  style: {
+                      color: '#666'
+                  },
+                  states: {
+                      hover: {
+                          fill: '#2196F3',
+                          style: {
+                              color: 'white'
+                          }
+                      },
+                      select: {
+                          fill: '#2196F3',
+                          style: {
+                              color: 'white'
+                          }
+                      }
+                  }
+              },
+              inputBoxBorderColor: '#e8e8e8',
+              inputBoxHeight: 30,
+              inputStyle: {
+                  color: '#666',
+                  fontWeight: 'bold'
+              },
+              labelStyle: {
+                  color: '#666',
+                  fontWeight: 'bold'
+              },
+              selected: 5 // گزینه all (آخرین دکمه)
+          },
+
+          // عنوان نمودار
+          title: {
+              text: 'نمودار قیمت و حجم معاملات',
+              style: {
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  color: '#333'
+              }
+          },
+
+          // تولتیپ
+          tooltip: {
+              split: true,
+              useHTML: true,
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              borderWidth: 1,
+              borderColor: '#e8e8e8',
+              borderRadius: 8,
+              shadow: true,
+              style: {
+                  padding: '10px'
+              },
+              formatter: function() {
+                  if (!this.points) return false;
+                  // تبدیل تاریخ به شمسی
+                  var shamsiDate = moment(this.x).locale('fa').format('jYYYY/jMM/jDD');
+                  let tooltipText = `
+                      <div style="direction: rtl; text-align: right; font-family: Vazirmatn;">
+                          <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #333">
+                              ${shamsiDate}
+                          </div>`;
+                  this.points.forEach(point => {
+                      if (point.series.name === 'قیمت') {
+                          tooltipText += `
+                              <div style="margin-bottom: 5px;">
+                                  <span style="color: ${point.color}">●</span>
+                                  <span style="color: #666">قیمت باز:</span>
+                                  <span style="font-weight: bold">${Highcharts.numberFormat(point.point.open, 0)}</span>
+                              </div>
+                              <div style="margin-bottom: 5px;">
+                                  <span style="color: ${point.color}">●</span>
+                                  <span style="color: #666">بیشترین:</span>
+                                  <span style="font-weight: bold">${Highcharts.numberFormat(point.point.high, 0)}</span>
+                              </div>
+                              <div style="margin-bottom: 5px;">
+                                  <span style="color: ${point.color}">●</span>
+                                  <span style="color: #666">کمترین:</span>
+                                  <span style="font-weight: bold">${Highcharts.numberFormat(point.point.low, 0)}</span>
+                              </div>
+                              <div style="margin-bottom: 5px;">
+                                  <span style="color: ${point.color}">●</span>
+                                  <span style="color: #666">قیمت بسته:</span>
+                                  <span style="font-weight: bold">${Highcharts.numberFormat(point.point.close, 0)}</span>
+                              </div>`;
+                      } else if (point.series.name === 'حجم معاملات') {
+                          tooltipText += `
+                              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #e8e8e8;">
+                                  <span style="color: ${point.color}">●</span>
+                                  <span style="color: #666">حجم معاملات:</span>
+                                  <span style="font-weight: bold">${Highcharts.numberFormat(point.y, 0)}</span>
+                              </div>`;
+                      }
+                  });
+                  tooltipText += '</div>';
+                  return tooltipText;
+              }
+          },
+
+          // محورها
+          yAxis: [{
+              labels: {
+                  align: 'right',
+                  x: -3,
+                  style: {
+                      color: '#666'
+                  }
+              },
+              title: {
+                  text: 'قیمت',
+                  style: {
+                      color: '#666',
+                      fontWeight: 'bold'
+                  }
+              },
+              height: '60%',
+              lineWidth: 1,
+              gridLineColor: '#f0f0f0',
+              resize: {
+                  enabled: true
+              }
+          }, {
+              labels: {
+                  align: 'right',
+                  x: -3,
+                  style: {
+                      color: '#666'
+                  }
+              },
+              title: {
+                  text: 'حجم معاملات',
+                  style: {
+                      color: '#666',
+                      fontWeight: 'bold'
+                  }
+              },
+              top: '65%',
+              height: '35%',
+              offset: 0,
+              lineWidth: 1,
+              gridLineColor: '#f0f0f0'
+          }],
+
+          // سری‌های داده
+          series: [{
+              type: 'candlestick',
+              name: 'قیمت',
+              id: 'main-series',
+              data: [],
+              color: '#ef5350', // رنگ شمع نزولی
+              upColor: '#26a69a', // رنگ شمع صعودی
+              lineColor: '#ef5350', // رنگ خط شمع نزولی
+              upLineColor: '#26a69a', // رنگ خط شمع صعودی
+              dataGrouping: {
+                  enabled: false
+              }
+          }, {
+              type: 'column',
+              name: 'حجم معاملات',
+              data: [],
+              yAxis: 1,
+              color: 'rgba(33, 150, 243, 0.5)',
+              dataGrouping: {
+                  enabled: false
+              }
+          }],
+
+          // تنظیمات ابزارهای تحلیلی
+          stockTools: {
+            gui: {
+                enabled: true,
+                container: 'stockToolsDiv',
+                buttons: [
+                    'indicators',
+                    'separator',
+                    'simpleShapes',
+                    'lines',
+                    'crookedLines',
+                    'measure',
+                    'advanced',
+                    'toggleAnnotations',
+                    'separator',
+                    'verticalLabels',
+                    'flags',
+                    'separator',
+                    'zoomChange',
+                    'fullScreen',
+                    'typeChange',
+                    'separator',
+                    'currentPriceIndicator',
+                    'saveChart'
+                ],
+                definitions: {
+                    button: {
+                        width: 30,
+                        height: 30,
+                        padding: 5
+                    }
+                }
+            }
+        },
+
+          // و این تنظیمات برای اطمینان از عملکرد درست ابزارها
+          zoomType: 'x',
+          panning: {
+              enabled: true,
+              type: 'x'
+          },
+
+          // تنظیمات ریسپانسیو
+          responsive: {
+              rules: [{
+                  condition: {
+                      maxWidth: 800
+                  },
+                  chartOptions: {
+                      rangeSelector: {
+                          inputEnabled: false
+                      }
+                  }
+              }]
+          },
+
+          // غیرفعال کردن کردیت Highcharts
+          credits: {
+              enabled: false
+          }
+      });
+  }
+
+    function updateChart(data) {
+        if (!chart) return;
+
+        const { ohlc, volume } = processChartData(data);
+        
+        if (currentFilters.chartType === 'candlestick') {
+            chart.series[0].update({
+                type: 'candlestick',
+                data: ohlc
+            }, false);
+        } else {
+            chart.series[0].update({
+                type: 'line',
+                data: ohlc.map(point => [point[0], point[4]]) // استفاده از قیمت پایانی
+            }, false);
+        }
+        
+        chart.series[1].setData(volume, false);
+        chart.redraw();
+        chart.hideLoading(); // اضافه کردن این خط
+    }
+
+    function showDataTable(data) {
+        const tableContainer = document.getElementById("dataTableContainer");
+        
+        if (!data || data.length === 0) {
+            tableContainer.style.display = "none";
+            return;
+        }
+
+        tableContainer.style.display = "block";
+        document.getElementById("toggleTable").textContent = "مخفی کردن جدول معاملات";
+
+        tableContainer.innerHTML = `
+            <h3 class="table-title">اطلاعات معاملات</h3>
+            <div class="table-wrapper">
+                <table id="dataTable" class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>نام محصول</th>
+                            <th>نماد</th>
+                            <th>تالار</th>
+                            <th>تولیدکننده</th>
+                            <th>نوع قرارداد</th>
+                            <th>میانگین وزنی قیمت</th>
+                            <th>ارزش معامله</th>
+                            <th>قیمت پایانی</th>
+                            <th>کمترین قیمت</th>
+                            <th>بیشترین قیمت</th>
+                            <th>قیمت پایه</th>
+                            <th>حجم عرضه</th>
+                            <th>حجم تقاضا</th>
+                            <th>حجم معامله</th>
+                            <th>واحد</th>
+                            <th>تاریخ معامله</th>
+                            <th>تاریخ تحویل</th>
+                            <th>محل تحویل</th>
+                            <th>عرضه‌کننده</th>
+                            <th>تاریخ تسویه</th>
+                            <th>کارگزار</th>
+                            <th>روش عرضه</th>
+                            <th>روش خرید</th>
+                            <th>بسته‌بندی</th>
+                            <th>نوع تسویه</th>
+                            <th>واحد پول</th>
+                            <th>کد عرضه</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        `;
+
+        const table = $('#dataTable').DataTable({
+            data: data,
+            columns: [
+                { data: 'id', title: 'ID' },
+                { data: 'product_name', title: 'نام محصول' },
+                { data: 'symbol', title: 'نماد' },
+                { data: 'market', title: 'تالار' },
+                { data: 'producer', title: 'تولیدکننده' },
+                { data: 'contract_type', title: 'نوع قرارداد' },
+                { 
+                    data: 'weighted_average_price', 
+                    title: 'میانگین وزنی قیمت',
+                    render: function(data) {
+                        return data === null ? '---' : data;
+                    }
+                },
+                { 
+                    data: 'transaction_value', 
+                    title: 'ارزش معامله',
+                    render: function(data) {
+                        return data === 0 ? '---' : new Intl.NumberFormat('fa-IR').format(data);
+                    }
+                },
+                { 
+                    data: 'closing_price', 
+                    title: 'قیمت پایانی',
+                    render: function(data) {
+                        return data === null ? '---' : new Intl.NumberFormat('fa-IR').format(data);
+                    }
+                },
+                { 
+                    data: 'lowest_price', 
+                    title: 'کمترین قیمت',
+                    render: function(data) {
+                        return data === null ? '---' : new Intl.NumberFormat('fa-IR').format(data);
+                    }
+                },
+                { 
+                    data: 'highest_price', 
+                    title: 'بیشترین قیمت',
+                    render: function(data) {
+                        return data === null ? '---' : new Intl.NumberFormat('fa-IR').format(data);
+                    }
+                },
+                { 
+                    data: 'base_price', 
+                    title: 'قیمت پایه',
+                    render: function(data) {
+                        return new Intl.NumberFormat('fa-IR').format(data);
+                    }
+                },
+                { data: 'supply_volume', title: 'حجم عرضه' },
+                { data: 'demand_volume', title: 'حجم تقاضا' },
+                { data: 'contract_volume', title: 'حجم معامله' },
+                { data: 'unit', title: 'واحد' },
+                { 
+                    data: 'transaction_date', 
+                    title: 'تاریخ معامله',
+                    render: function(data) {
+                        return new Date(data).toLocaleDateString('fa-IR');
+                    }
+                },
+                { 
+                    data: 'delivery_date', 
+                    title: 'تاریخ تحویل',
+                    render: function(data) {
+                        return data ? new Date(data).toLocaleDateString('fa-IR') : '---';
+                    }
+                },
+                { data: 'delivery_location', title: 'محل تحویل' },
+                { data: 'supplier', title: 'عرضه‌کننده' },
+                { 
+                    data: 'settlement_date', 
+                    title: 'تاریخ تسویه',
+                    render: function(data) {
+                        return data ? new Date(data).toLocaleDateString('fa-IR') : '---';
+                    }
+                },
+                { data: 'broker', title: 'کارگزار' },
+                { data: 'supply_method', title: 'روش عرضه' },
+                { data: 'purchase_method', title: 'روش خرید' },
+                { 
+                    data: 'packaging', 
+                    title: 'بسته‌بندی',
+                    render: function(data) {
+                        return data === null ? '---' : data;
+                    }
+                },
+                { 
+                    data: 'settlement_type', 
+                    title: 'نوع تسویه',
+                    render: function(data) {
+                        return data === null ? '---' : data;
+                    }
+                },
+                { data: 'currency', title: 'واحد پول' },
+                { data: 'supply_code', title: 'کد عرضه' }
+            ],
+            language: {
+                search: "جستجو:",
+                lengthMenu: "نمایش _MENU_ سطر",
+                info: "نمایش _START_ تا _END_ از _TOTAL_ سطر",
+                infoEmpty: "موردی یافت نشد",
+                infoFiltered: "(فیلتر شده از _MAX_ سطر)",
+                paginate: {
+                    first: "اول",
+                    last: "آخر",
+                    next: "بعدی",
+                    previous: "قبلی"
+                }
+            },
+            order: [[0, 'desc']],
+            pageLength: 25,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: 'کپی'
+                },
+                {
+                    extend: 'csv',
+                    text: 'دانلود CSV'
+                },
+                {
+                    extend: 'excel',
+                    text: 'دانلود Excel'
+                },
+                {
+                    extend: 'print',
+                    text: 'چاپ'
+                }
+            ],
+            responsive: true,
+            scrollX: true
+        });
+    }
+
+    function updateFilterSummary() {
+    const summaryDiv = document.getElementById("filterSummary");
+    const selectedFiltersDiv = document.querySelector(".selected-filters");
+    let summaryText = "";
+
+    if (currentFilters.market) {
+        summaryText += `<span>تالار: ${currentFilters.market}</span>`;
+    }
+    if (currentFilters.producer) {
+        summaryText += `<span>تولیدکننده: ${currentFilters.producer}</span>`;
+    }
+    if (currentFilters.product) {
+        summaryText += `<span>محصول: ${currentFilters.product}</span>`;
+    }
+    if (currentFilters.contractType) {
+        summaryText += `<span>نوع قرارداد: ${currentFilters.contractType}</span>`;
+    }
+    if (currentFilters.chartType) {
+        summaryText += `<span>نوع نمودار: ${currentFilters.chartType === 'candlestick' ? 'شمعی' : 'خطی'}</span>`;
+    }
+
+    summaryDiv.innerHTML = summaryText || "هیچ فیلتری انتخاب نشده است";
+
+    if (summaryText) {
+        selectedFiltersDiv.style.display = "block";
+    } else {
+        selectedFiltersDiv.style.display = "none";
+    }
+    }
+
+    // رویدادهای اولیه
+    $(document).ready(function() {
+      // تنظیم زمان و کاربر جاری
+      const currentDateTime = "2025-02-21 07:59:06";
+      const currentUser = "AmirMohammadSalimi";
+      
+      // تنظیم اولیه
+      document.getElementById("lastUpdate").textContent = new Date(currentDateTime).toLocaleString("fa-IR");
+      document.getElementById("currentUser").textContent = currentUser;
+
+      // راه‌اندازی Select2 برای همه فیلترها
+      initializeSelect2();
+      
+      // بارگذاری اولیه تالارها
+      loadMarkets();
+      
+      // ایجاد نمودار
+      createChart();
+
+      // اتصال رویدادهای فیلترها
+      $("#marketFilter").on("change", handleMarketChange);
+      $("#producerFilter").on("change", handleProducerChange);
+      $("#productFilter").on("change", handleProductChange);
+      $("#contractTypeFilter").on("change", handleContractTypeChange);
+      $("#chartTypeFilter").on("change", handleChartTypeChange);
+
+      // رویداد دکمه اعمال فیلتر
+      $("#applyFilters").on("click", async function() {
+        showLoading();
+        try {
+            const url = new URL("http://185.213.164.220:8000/markets/data");
+            
+            // اضافه کردن پارامترهای فیلتر به URL
+            if (currentFilters.market) url.searchParams.append("market", currentFilters.market);
+            if (currentFilters.producer) url.searchParams.append("producer", currentFilters.producer);
+            if (currentFilters.product) url.searchParams.append("product_name", currentFilters.product);
+            if (currentFilters.contractType) url.searchParams.append("contract_type", currentFilters.contractType);
+
+            console.log("درخواست API برای فیلترها:", url.toString());
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data && data.filtered_data) {
+            rawData = data.filtered_data;
+            updateChart(rawData);
+            showDataTable(rawData);
+            updateFilterSummary(); // اینجا اضافه شده: وقتی داده با موفقیت دریافت شد
+            } else {
+            chart.showLoading('داده‌ای برای نمایش وجود ندارد');
+            document.getElementById("dataTableContainer").style.display = "none";
+            updateFilterSummary(); // اینجا اضافه شده: وقتی داده‌ای وجود نداشت
+            }
+        } catch (error) {
+            console.error("خطا در دریافت داده‌های بازار:", error);
+            chart.showLoading('خطا در دریافت اطلاعات');
+            updateFilterSummary(); // اینجا اضافه شده: وقتی خطا رخ داد
+        } finally {
+            hideLoading();
+            chart.hideLoading(); // مخفی کردن لودینگ نمودار
+        }
+        });
+
+      // رویداد نمایش/مخفی کردن جدول
+      $("#toggleTable").on("click", function() {
+          const tableContainer = document.getElementById("dataTableContainer");
+          const button = document.getElementById("toggleTable");
+          if (tableContainer.style.visibility === "hidden" || tableContainer.style.visibility === "") {
+              tableContainer.style.visibility = "visible";
+              tableContainer.style.position = "static";
+              tableContainer.style.left = "auto";
+              button.textContent = "مخفی کردن جدول معاملات";
+              if (rawData.length > 0) {
+                  showDataTable(rawData);
+              }
+              if (chart) {
+                  setTimeout(() => chart.reflow(), 100);
+              }
+          } else {
+              tableContainer.style.visibility = "hidden";
+              tableContainer.style.position = "absolute";
+              tableContainer.style.left = "-9999px";
+              button.textContent = "نمایش جدول معاملات";
+              if (chart) {
+                  setTimeout(() => chart.reflow(), 100);
+              }
+          }
+      });
+
+      // اعمال استایل‌های اضافی برای Select2
+      $(".select2-container").css({
+          "width": "100%",
+          "font-family": "Vazirmatn"
+      });
+
+      // تنظیم حالت پیش‌فرض جدول
+      $("#dataTableContainer").hide();
+
+      // ریست کردن فیلترها در صورت رفرش صفحه
+      resetFilters();
+
+      // مخفی کردن لودینگ اولیه
+      hideLoading();
+
+      // اضافه کردن مدیریت خطاهای عمومی
+      window.onerror = function(msg, url, line) {
+          console.error("خطای JavaScript:", msg, "در خط", line, "از فایل", url);
+          hideLoading();
+          return false;
+      };
+
+      // مدیریت خطاهای شبکه
+      window.addEventListener('offline', function() {
+          alert('اتصال به اینترنت قطع شده است. لطفاً اتصال خود را بررسی کنید.');
+      });
+
+      // بررسی به‌روزرسانی‌های خودکار (هر 5 دقیقه)
+      setInterval(function() {
+          if (currentFilters.market) {
+              $("#applyFilters").trigger("click");
+          }
+      }, 300000); // 5 دقیقه
+
+      console.log("🚀 برنامه با موفقیت راه‌اندازی شد");
+  });
+    </script>
+  </body>
+</html>

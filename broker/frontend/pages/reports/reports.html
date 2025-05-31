@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <title>گزارشات کارخانه‌ها و محصولات</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- کتابخانه‌های مورد نیاز -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+    />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment-jalaali@0.9.2/build/moment-jalaali.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100;200;300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="toppest-nav">
+      <div id="right-toppest-nav">
+        <ul class="main-menu-right">
+          <li class="main-menu-right-items activegc">
+            <a class="linkmenu active activeg" href="/reports/reports.html"
+              >گزارشات</a
+            >
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/raw_data/data.html">داده‌های خام</a>
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/arze/arze.html">اطلاعیه عرضه</a>
+          </li>
+          <li class="main-menu-right-items notactivenc">
+            <a class="linkmenu notactiven" href="/chart/chart.html">نمودارها</a>
+          </li>
+        </ul>
+      </div>
+      <div id="left-toppest-nav">نام کاربری</div>
+    </div>
+    <div class="samane-tahlil">
+      <p class="matnesamane">سامانه تحلیل بورس کالا → گزارشات</p>
+    </div>
+    <div class="main-container">
+      <div class="r-part">
+        <div class="containernamefilter">
+          <h3 class="filternamechoose">انتخاب نوع گزارش</h3>
+        </div>
+        <div class="filters">
+          <div class="filter-group" style="margin-bottom: 20px">
+            <label class="report-type-radio">
+              <input type="radio" name="reportType" id="tabFactory" checked />
+              <span class="custom-radio"></span>
+              بر اساس کارخانه
+            </label>
+            <label class="report-type-radio">
+              <input type="radio" name="reportType" id="tabProduct" />
+              <span class="custom-radio"></span>
+              بر اساس محصول
+            </label>
+          </div>
+          <!-- فیلترهای کارخانه -->
+          <div id="factoryFilters">
+            <div class="filter-item">
+              <select id="marketFilterFactory">
+                <option value="">انتخاب تالار</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <select id="producerFilter">
+                <option value="">انتخاب کارخانه</option>
+              </select>
+            </div>
+            <div class="filter-actions">
+              <button id="applyFiltersFactory" class="apply-filters-btn">
+                اعمال فیلترها
+              </button>
+            </div>
+          </div>
+          <!-- فیلترهای محصول -->
+          <div id="productFilters" style="display: none">
+            <div class="filter-item">
+              <select id="marketFilterProduct">
+                <option value="">انتخاب تالار</option>
+              </select>
+            </div>
+            <div class="filter-item">
+              <select id="productFilter">
+                <option value="">انتخاب محصول</option>
+              </select>
+            </div>
+            <div class="filter-actions">
+              <button id="applyFiltersProduct" class="apply-filters-btn">
+                اعمال فیلترها
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="l-part">
+        <div class="selected-filters">
+          <h3>فیلترهای انتخاب‌شده</h3>
+          <div id="filterSummary"></div>
+        </div>
+        <p class="resu" id="reportTitle">گزارش تجمیعی فروش کارخانه</p>
+        <div
+          id="monthlyChartContainer"
+          style="
+            background: white;
+            border-radius: 8px;
+            margin: 20px 10px;
+            padding: 20px;
+          "
+        ></div>
+        <div id="reportTableContainer"></div>
+      </div>
+    </div>
+    <script src="reports.js"></script>
+  </body>
+</html>

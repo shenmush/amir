@@ -1,0 +1,546 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary-color: #2196f3;
+  --primary-dark: #1976d2;
+  --success-color: #26a69a;
+  --danger-color: #ef5350;
+  --text-primary: #333;
+  --text-secondary: #666;
+  --background-color: #f4f6f9;
+  --newbackground-color: #6c1f4b;
+}
+
+body {
+  font-family: "Vazirmatn", sans-serif;
+  direction: rtl; /* اضافه کردم چون HTML شما dir="rtl" داره */
+}
+
+/* نوار بالایی */
+#toppest-nav {
+  height: 56px;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.linkmenu {
+  text-decoration: none;
+  color: white;
+}
+
+.linkmenulast {
+  color: var(--newbackground-color);
+}
+.main-menu-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  list-style: none;
+  margin-right: 15px;
+  font-weight: bold;
+}
+
+.main-menu-right-items {
+  border: 2px solid #ffffff;
+  width: 135px;
+  height: 40px;
+  background-color: var(--newbackground-color);
+  color: var(--background-color);
+  font-family: "Vazirmatn";
+  border-radius: 20px;
+  text-align: center;
+  padding: 5px;
+}
+
+.main-menu-right-items:last-child {
+  background-color: #ffffff;
+  color: var(--newbackground-color);
+  border: 2px solid var(--newbackground-color);
+}
+
+#left-toppest-nav {
+  width: auto;
+  height: 40px;
+  background-color: #ffffff;
+  color: var(--newbackground-color);
+  border: 2px solid var(--newbackground-color);
+  border-radius: 20px;
+  padding: 5px 15px;
+  margin-left: 20px;
+}
+
+/* بنر بالای صفحه */
+.samane-tahlil {
+  width: 100%;
+  height: 120px;
+  background-color: var(--newbackground-color);
+  background-image: url("pattern.png");
+}
+
+.matnesamane {
+  color: white;
+  font-weight: bold;
+  font-size: 30px;
+  padding-right: 50px;
+  padding-top: 40px;
+}
+
+.matnesamane:hover {
+  font-size: 30.5px;
+  transition: 0.3s;
+}
+
+/* کانتینر اصلی */
+.main-container {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+  padding: 0 10px; /* اضافه کردم برای جلوگیری از چسبیدن به لبه */
+}
+
+.highcharts-container,
+.highcharts-stocktools-wrapper,
+.highcharts-bindings-wrapper {
+    pointer-events: auto !important;
+    z-index: 10 !important;
+}
+.highcharts-menu-wrapper,
+.highcharts-menu {
+    z-index: 15 !important;
+}
+#chartContainer {
+    position: relative;
+    z-index: 5 !important;
+}
+
+.l-part {
+  width: 1050px;
+  height: auto;
+  background-color: var(--newbackground-color);
+  border-radius: 3%;
+  box-sizing: border-box;
+}
+
+.r-part {
+  width: 270px;
+  background-color: var(--newbackground-color);
+  border-radius: 24px;
+  height: 500px;
+  padding-right: 8px;
+  margin-right: 10px;
+  box-shadow: 5px 5px 3px lightgray;
+  box-sizing: border-box;
+}
+
+/* فیلترها */
+.filter-item {
+  display: flex;
+  margin-bottom: 15px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.filternamechoose {
+  display: inline-block;
+  font-weight: bold;
+  padding-top: 29px;
+  font-size: 30px;
+  color: var(--background-color);
+  margin-bottom: 48px;
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 15px;
+}
+
+.filterstyleset {
+  border-radius: 15px;
+  font-size: 24px;
+  font-weight: bold;
+  width: 220px;
+  color: var(--newbackground-color);
+  padding-right: 15px;
+  font-family: "Vazirmatn", sans-serif;
+}
+
+#producerFilter {
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  width: 220px;
+  color: var(--newbackground-color);
+  padding-right: 15px;
+  font-family: "Vazirmatn";
+}
+
+#productFilter {
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  width: 220px;
+  padding-right: 15px;
+  color: var(--newbackground-color);
+  font-family: "Vazirmatn";
+}
+
+#contractTypeFilter {
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  width: 220px;
+  padding-right: 15px;
+  color: var(--newbackground-color);
+  font-family: "Vazirmatn";
+}
+
+#chartTypeFilter {
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  width: 220px;
+  color: var(--newbackground-color);
+  padding-right: 15px;
+  font-family: "Vazirmatn";
+}
+
+/* Select2 */
+.select2-container {
+  width: 220px !important; /* هماهنگ با فیلترها */
+  display: inline-block;
+}
+
+.select2-container--default .select2-selection--single {
+  width: 220px;
+  border-radius: 25px;
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--newbackground-color);
+  padding: 5 10px;
+  font-family: "Vazirmatn", sans-serif;
+  background-color: white;
+  border: 2px solid var(--newbackground-color);
+  box-sizing: border-box;
+  height: 40px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: var(--newbackground-color);
+  line-height: 28px;
+}
+
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  height: 44px;
+}
+
+.select2-container--default .select2-dropdown {
+  width: 220px !important;
+  border-radius: 20px;
+  font-family: "Vazirmatn", sans-serif;
+}
+
+.select2-container--default .select2-results__option {
+  font-size: 20px;
+  color: var(--newbackground-color);
+  padding: 5px 10px;
+}
+
+/* دکمه‌ها */
+#applyFilters {
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  padding-right: 15px;
+  padding-left: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  color: var(--background-color); /* برای خوانایی */
+  font-family: "Vazirmatn";
+  background-color: var(--newbackground-color);
+  border: 4px solid var(--background-color);
+  width: 200px;
+  margin-top: 40px;
+  margin-bottom: 25px;
+  margin-right: 4px;
+  margin-left: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  box-sizing: border-box;
+  height: 60px;
+  line-height: 36px;
+}
+
+#applyFilters:hover {
+  background-color: var(--background-color);
+  color: var(--newbackground-color);
+}
+
+.btn1 {
+  border-radius: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  padding-right: 15px;
+  padding-left: 10px;
+  color: white; /* برای خوانایی */
+  font-family: "Vazirmatn";
+  background-color: var(--newbackground-color);
+  border: 3px solid white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: auto;
+  margin-bottom: 15px;
+}
+
+.infoshowbtn {
+  margin-right: 15px;
+}
+.infoshowbtn:hover {
+  background-color: var(--background-color);
+  color: var(--newbackground-color);
+  font-weight: bold;
+}
+
+/* سایر بخش‌ها */
+.filter-actions {
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.header-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.resu {
+  font-size: 28px;
+  color: var(--background-color);
+  padding: 0 25px;
+  font-weight: bold;
+  margin-top: 25px;
+  margin-bottom: 15px;
+}
+
+.num1 {
+  width: auto;
+  background-color: var(--background-color);
+  color: var(--newbackground-color);
+  font-size: 22px;
+  display: inline-block;
+  border-radius: 15px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.num2 {
+  width: auto;
+  background-color: var(--background-color);
+  color: var(--newbackground-color);
+  font-size: 22px;
+  display: inline-block;
+  border-radius: 15px;
+  padding: 5px;
+  margin-left: 10px;
+}
+
+.tblshow {
+  font-weight: bold;
+  color: var(--background-color);
+  font-size: 25px;
+  margin-top: 25px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+#chartContainer {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 700px;
+  width: auto;
+  margin-bottom: 2rem;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+/* جدول داده‌ها */
+.data-table-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+  margin-right: 15px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.table-title {
+  margin: 0 0 1rem;
+  color: var(--text-primary);
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.data-table th,
+.data-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.data-table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.data-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+/* لودینگ */
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 18px;
+  z-index: 9999;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Highcharts */
+.highcharts-stocktools-wrapper {
+  direction: rtl;
+}
+
+.highcharts-bindings-wrapper .highcharts-stocktools-toolbar {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.highcharts-bindings-wrapper .highcharts-menu-item {
+  margin: 3px;
+}
+
+.highcharts-bindings-wrapper .highcharts-menu-item-btn {
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+}
+
+.highcharts-bindings-wrapper .highcharts-menu-item-btn:hover {
+  background-color: #e9ecef;
+}
+
+/* فیلترهای انتخاب‌شده */
+.selected-filters {
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 25px;
+  direction: rtl;
+  text-align: right;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  background-color: var(--newbackground-color);
+  background-image: url("pattern.png");
+
+  display: none;
+}
+
+.selected-filters h3 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  color: #ffffff;
+  background-color: transparent;
+}
+
+#filterSummary {
+  font-size: 14px;
+  color: #ffffff;
+  background-color: transparent;
+}
+
+#filterSummary span {
+  display: inline-block;
+  margin-left: 15px;
+  background-color: #ffffff;
+  padding: 5px 10px;
+  border-radius: 15px;
+  color: var(--newbackground-color);
+  font-size: 15px;
+}
+
+/* ریسپانسیو کردن */
+@media (max-width: 1320px) {
+  .l-part {
+    width: 70%;
+  }
+  .r-part {
+    width: 25%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+  }
+  .l-part,
+  .r-part {
+    width: 100%;
+    margin-right: 0;
+  }
+  .main-menu-right-items {
+    width: 100px;
+    font-size: 14px;
+  }
+}

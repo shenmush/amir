@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=deivce-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>بازار کالا</title>
+
+    <!-- کتابخانه‌های مورد نیاز -->
+    <link
+      href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.dataTables.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-material-ui/material-ui.css"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=check_box_outline_blank"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=keyboard_arrow_down"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+  </head>
+  <body>
+    <div id="toppest-nav">
+      <div id="right-toppest-nav">
+        <ul class="main-menu-right">
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/reports/reports.html">گزارشات</a>
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu active activei" href="/raw_data/data.html"
+              >داده‌های خام</a
+            >
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/arze/arze.html">اطلاعیه عرضه</a>
+          </li>
+          <li class="main-menu-right-items">
+            <a class="linkmenu" href="/chart/chart.html">نمودارها</a>
+          </li>
+        </ul>
+      </div>
+      <div id="left-toppest-nav">نام کاربری</div>
+    </div>
+    <div class="samane-tahlil">
+      <p class="matnesamane">سامانه تحلیل کالا -> بازار کالا</p>
+    </div>
+    <div class="ManiContainer">
+      <div class="leftPart">
+        <!-- بخش انتخاب ستون‌ها -->
+        <div class="column-selector-container">
+          <div class="column-selector-title">
+            <span>انتخاب گزینه‌های نمایش بیشتر</span>
+            <span class="material-symbols-outlined">keyboard_arrow_down</span>
+          </div>
+          <div class="select-all-option">
+            <label>
+              <input type="checkbox" id="select-all-columns" /> انتخاب همه
+            </label>
+            <i class="material-icons">check_box_outline_blank</i>
+          </div>
+        </div>
+        <div class="column-options" id="column-options"></div>
+
+        <div class="container">
+          <!-- هدر صفحه -->
+          <p class="headiing">نمایش نتایج</p>
+          <div class="nothingtoshowdiv">
+            <p class="nothingtoshow">
+              در حال حاضر موردی برای نمایش وجود ندارد.
+            </p>
+          </div>
+          <div class="bgshowresult">
+            <!-- جدول نتایج -->
+            <div class="table-container">
+              <table
+                id="resultTable"
+                class="display nowrap"
+                style="width: 100%"
+              ></table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="rightPart">
+        <div class="filterchoosename">اعمال فیلترها</div>
+        <!-- بخش فیلترها -->
+        <div class="filter-card">
+          <div class="filter-grid">
+            <div class="flexItems">
+              <label for="marketSelect"></label>
+              <select id="marketSelect" class="market-filter">
+                <option value="">تالار</option>
+              </select>
+            </div>
+            <div class="flexItems">
+              <label for="productSelect"></label>
+              <select id="productSelect" class="product-filter">
+                <option value="">محصول</option>
+              </select>
+            </div>
+            <div class="flexItems">
+              <label for="producerSelect"></label>
+              <select id="producerSelect" class="producer-filter">
+                <option value="">کارخانه</option>
+              </select>
+            </div>
+            <div class="flexItems">
+              <label class="startDateName" for="startDate">از تاریخ</label>
+              <input
+                type="text"
+                id="startDate"
+                class="date-input pdp-input"
+                placeholder="1402/11/10"
+                readonly
+              />
+            </div>
+            <div class="flexItems">
+              <label class="finishDateName" for="endDate">تا تاریخ</label>
+              <input
+                type="text"
+                id="endDate"
+                class="date-input pdp-input"
+                placeholder="1403/03/09"
+                readonly
+              />
+            </div>
+          </div>
+          <div>
+            <button onclick="loadData()" class="btn btn-primary">
+              اعمال فیلترها
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- لودینگ -->
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+    </div>
+
+    <!-- اسکریپت‌های مورد نیاز -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      // تنظیم ترتیب پیش‌فرض ستون‌ها
+      const columnOrder = [
+        "transaction_date",
+        "market",
+        "product_name",
+        "producer",
+        "symbol",
+        "weighted_average_price",
+        "closing_price",
+        "transaction_value",
+        "lowest_price",
+        "highest_price",
+        "base_price",
+        "supply_volume",
+        "demand_volume",
+        "contract_volume",
+        "contract_type",
+        "unit",
+        "delivery_date",
+        "delivery_location",
+        "supplier",
+        "settlement_date",
+        "broker",
+        "supply_method",
+        "purchase_method",
+        "packaging",
+        "settlement_type",
+        "currency",
+        "supply_code",
+        "id",
+      ];
+
+      // ستون‌های پیش‌فرض نمایش داده شده
+      const defaultColumns = [
+        "transaction_date",
+        "market",
+        "product_name",
+        "producer",
+        "weighted_average_price",
+        "closing_price",
+      ];
+
+      // تنظیمات فارسی برای DataTables
+      const datatablesFA = {
+        processing: "در حال پردازش...",
+        search: "جستجو:",
+        lengthMenu: "نمایش _MENU_ سطر",
+        info: "نمایش _START_ تا _END_ از _TOTAL_ سطر",
+        infoEmpty: "نمایش 0 تا 0 از 0 سطر",
+        infoFiltered: "(فیلتر شده از _MAX_ سطر)",
+        zeroRecords: "هیچ نتیجه‌ای یافت نشد",
+        emptyTable: "هیچ داده‌ای در جدول وجود ندارد",
+        paginate: {
+          first: "ابتدا",
+          previous: "قبلی",
+          next: "بعدی",
+          last: "انتها",
+        },
+      };
+
+      // متغیر جدول
+      let dataTable = null;
+
+      // تابع تبدیل اعداد فارسی به انگلیسی
+      function persianToEnglishDigits(str) {
+        const persianDigits = [
+          "۰",
+          "۱",
+          "۲",
+          "۳",
+          "۴",
+          "۵",
+          "۶",
+          "۷",
+          "۸",
+          "۹",
+        ];
+        const englishDigits = [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+        ];
+        let result = str;
+        for (let i = 0; i < 10; i++) {
+          result = result.replace(
+            new RegExp(persianDigits[i], "g"),
+            englishDigits[i]
+          );
+        }
+        return result;
+      }
+
+      // تابع تبدیل تاریخ شمسی به میلادی
+      function convertPersianToGregorian(persianDateStr) {
+        if (!persianDateStr) return "";
+        try {
+          const cleanedDateStr = persianToEnglishDigits(persianDateStr)
+            .replace(/[\u200B-\u200F\u202A-\u202E\s]/g, "")
+            .replace(/[^0-9\/]/g, "");
+
+          const dateRegex = /^\d{4}\/\d{2}\/\d{2}$/;
+          if (!dateRegex.test(cleanedDateStr)) {
+            throw new Error("فرمت تاریخ نامعتبر است");
+          }
+
+          const [year, month, day] = cleanedDateStr
+            .split("/")
+            .map((num) => parseInt(num, 10));
+          if (
+            isNaN(year) ||
+            isNaN(month) ||
+            isNaN(day) ||
+            year < 1300 ||
+            year > 1500 ||
+            month < 1 ||
+            month > 12 ||
+            day < 1 ||
+            day > 31
+          ) {
+            throw new Error("مقادیر تاریخ نامعتبر است");
+          }
+
+          const persianDateObj = new persianDate([year, month, day]);
+          const gregorianDate = persianDateObj
+            .toCalendar("gregorian")
+            .format("YYYY-MM-DD");
+          return persianToEnglishDigits(gregorianDate);
+        } catch (error) {
+          console.error("خطا در تبدیل تاریخ:", error);
+          Swal.fire({
+            title: "خطا",
+            text: "فرمت تاریخ وارد شده نامعتبر است.",
+            icon: "error",
+            confirmButtonText: "تایید",
+          });
+          return "";
+        }
+      }
+
+      $(document).ready(function () {
+        updateUserInfo();
+        initializeFilters();
+        initializeDatePickers();
+
+        $(".column-selector-title").on("click", function () {
+          const $columnOptions = $("#column-options");
+          $(this).toggleClass("active");
+          $columnOptions.slideToggle(300, function () {
+            $columnOptions.toggleClass("show", $columnOptions.is(":visible"));
+          });
+        });
+
+        $(".select-all-option").on("click", function () {
+          const $checkbox = $("#select-all-columns");
+          const $icon = $(this).find(".material-icons");
+
+          $checkbox.prop("checked", !$checkbox.prop("checked"));
+
+          if ($checkbox.prop("checked")) {
+            $icon.text("check_box");
+          } else {
+            $icon.text("check_box_outline_blank");
+          }
+
+          const isChecked = $checkbox.prop("checked");
+          $('#column-options input[type="checkbox"]').prop(
+            "checked",
+            isChecked
+          );
+          updateColumnVisibility();
+        });
+
+        $("#column-options").on(
+          "change",
+          'input[type="checkbox"]',
+          function () {
+            const allCheckboxes = $('#column-options input[type="checkbox"]');
+            const allChecked =
+              allCheckboxes.length === allCheckboxes.filter(":checked").length;
+            $("#select-all-columns").prop("checked", allChecked);
+
+            const $icon = $(".select-all-option").find(".material-icons");
+            if (allChecked) {
+              $icon.text("check_box");
+            } else {
+              $icon.text("check_box_outline_blank");
+            }
+
+            updateColumnVisibility();
+          }
+        );
+      });
+
+      function updateUserInfo() {
+        $("#currentUser").text("کارگزاری برهان سهند");
+        const now = new persianDate().toCalendar("persian").toLocale("fa");
+        $("#currentTime").text(now.format("YYYY/MM/DD HH:mm:ss"));
+      }
+
+      function initializeFilters() {
+        const select2CommonConfig = {
+          dir: "rtl",
+          language: "fa",
+          allowClear: true,
+          theme: "classic",
+          width: "100%",
+          minimumInputLength: 0,
+          minimumResultsForSearch: 0,
+        };
+
+        async function fetchAndInitializeSelect(
+          selector,
+          field,
+          dependentFields = {}
+        ) {
+          try {
+            const currentValue = $(selector).val() || "";
+            const placeholderText =
+              field === "market"
+                ? "تالار"
+                : field === "product_name"
+                ? "محصول"
+                : "کارخانه";
+            $(selector).select2({
+              ...select2CommonConfig,
+              placeholder: placeholderText,
+              data: [{ id: "", text: placeholderText }],
+            });
+
+            const response = await $.ajax({
+              url: "http://185.213.164.220:8000/markets/data",
+              data: {
+                unique: true,
+                field: field,
+                ...dependentFields,
+              },
+              cache: false,
+            });
+
+            const data =
+              response[
+                field === "market"
+                  ? "markets"
+                  : field === "product_name"
+                  ? "product_names"
+                  : "producers"
+              ] || [];
+
+            const options = [
+              { id: "", text: placeholderText },
+              ...data.map((item) => ({ id: item, text: item })),
+            ];
+
+            $(selector)
+              .empty()
+              .select2({
+                ...select2CommonConfig,
+                data: options,
+                placeholder: placeholderText,
+                matcher: function (params, data) {
+                  if ($.trim(params.term) === "") {
+                    return data;
+                  }
+                  if (typeof data.text === "undefined") {
+                    return null;
+                  }
+                  const searchStr = params.term.toLowerCase();
+                  const dataStr = data.text.toLowerCase();
+                  if (dataStr.indexOf(searchStr) > -1) {
+                    return data;
+                  }
+                  return null;
+                },
+              });
+
+            if (
+              currentValue &&
+              options.some((option) => option.id === currentValue)
+            ) {
+              $(selector).val(currentValue);
+            } else {
+              $(selector).val("");
+            }
+            $(selector).trigger("change.select2");
+
+            $(selector).prop("disabled", false);
+            return options;
+          } catch (error) {
+            console.error("خطا در دریافت داده‌ها:", error);
+            $(selector).prop("disabled", true);
+            return [];
+          }
+        }
+
+        $(".market-filter, .product-filter, .producer-filter").each(
+          function () {
+            const placeholderText = $(this).hasClass("market-filter")
+              ? "تالار"
+              : $(this).hasClass("product-filter")
+              ? "محصول"
+              : "کارخانه";
+            $(this).select2({
+              ...select2CommonConfig,
+              placeholder: placeholderText,
+              data: [{ id: "", text: placeholderText }],
+            });
+          }
+        );
+
+        $("#productSelect, #producerSelect").prop("disabled", true);
+
+        fetchAndInitializeSelect("#marketSelect", "market");
+
+        $("#marketSelect").on("change", async function () {
+          const marketValue = $(this).val();
+          $("#productSelect, #producerSelect").prop("disabled", true);
+
+          if (marketValue) {
+            await Promise.all([
+              fetchAndInitializeSelect("#productSelect", "product_name", {
+                market: marketValue,
+              }),
+              fetchAndInitializeSelect("#producerSelect", "producer", {
+                market: marketValue,
+              }),
+            ]);
+            $("#productSelect, #producerSelect").prop("disabled", false);
+          } else {
+            $("#productSelect").val("").trigger("change.select2");
+            $("#producerSelect").val("").trigger("change.select2");
+          }
+        });
+
+        $("#productSelect").on("change", async function () {
+          const productValue = $(this).val();
+          const marketValue = $("#marketSelect").val();
+          const producerValue = $("#producerSelect").val();
+
+          if (marketValue) {
+            const params = { market: marketValue };
+            if (productValue) {
+              params.product_name = productValue;
+            }
+            await fetchAndInitializeSelect(
+              "#producerSelect",
+              "producer",
+              params
+            );
+            if (
+              producerValue &&
+              !$('#producerSelect option[value="' + producerValue + '"]').length
+            ) {
+              $("#producerSelect").val("").trigger("change.select2");
+            }
+          } else {
+            $("#producerSelect").val("").trigger("change.select2");
+            $("#producerSelect").prop("disabled", true);
+          }
+        });
+
+        $("#producerSelect").on("change", async function () {
+          const producerValue = $(this).val();
+          const marketValue = $("#marketSelect").val();
+          const productValue = $("#productSelect").val();
+
+          if (marketValue) {
+            const params = { market: marketValue };
+            if (producerValue) {
+              params.producer = producerValue;
+            }
+            await fetchAndInitializeSelect(
+              "#productSelect",
+              "product_name",
+              params
+            );
+            if (
+              productValue &&
+              !$('#productSelect option[value="' + productValue + '"]').length
+            ) {
+              $("#productSelect").val("").trigger("change.select2");
+            }
+          } else {
+            $("#productSelect").val("").trigger("change.select2");
+            $("#productSelect").prop("disabled", true);
+          }
+        });
+      }
+
+      function initializeDatePickers() {
+        $(".pdp-input").persianDatepicker({
+          format: "YYYY/MM/DD",
+          autoClose: true,
+          initialValue: false,
+          persianDigit: false,
+          observer: true,
+          calendar: {
+            persian: {
+              locale: "fa",
+            },
+          },
+          toolbox: {
+            calendarSwitch: {
+              enabled: false,
+            },
+          },
+          onSelect: function () {
+            $(this.model.inputElement).trigger("change");
+            console.log("تاریخ انتخاب شده:", this.model.inputElement.value);
+          },
+        });
+      }
+
+      function translateHeader(key) {
+        const headers = {
+          id: "شناسه",
+          product_name: "نام محصول",
+          symbol: "نماد",
+          market: "تالار",
+          producer: "کارخانه",
+          contract_type: "نوع قرارداد",
+          weighted_average_price: "قیمت میانگین وزنی",
+          transaction_value: "ارزش معامله",
+          closing_price: "قیمت بسته شدن",
+          lowest_price: "کمترین قیمت",
+          highest_price: "بیشترین قیمت",
+          base_price: "قیمت پایه",
+          supply_volume: "حجم عرضه",
+          demand_volume: "حجم تقاضا",
+          contract_volume: "حجم قرارداد",
+          unit: "واحد",
+          transaction_date: "تاریخ معامله",
+          delivery_date: "تاریخ تحویل",
+          delivery_location: "مکان تحویل",
+          supplier: "فروشنده",
+          settlement_date: "تاریخ تسویه",
+          broker: "کارگزار",
+          supply_method: "روش عرضه",
+          purchase_method: "روش خرید",
+          packaging: "بسته‌بندی",
+          settlement_type: "نوع تسویه",
+          currency: "ارز",
+          supply_code: "کد عرضه",
+        };
+        return headers[key] || key;
+      }
+
+      function updateColumnOptions(allColumns) {
+        const container = document.getElementById("column-options");
+        container.innerHTML = "";
+
+        const sortedColumns = allColumns.sort((a, b) =>
+          translateHeader(a).localeCompare(translateHeader(b), "fa")
+        );
+
+        sortedColumns.forEach((column) => {
+          const div = document.createElement("div");
+          div.className = "column-option";
+          div.innerHTML = `
+                  <label>
+                      <input type="checkbox" 
+                             data-column="${column}" 
+                             ${
+                               defaultColumns.includes(column) ? "checked" : ""
+                             }>
+                      ${translateHeader(column)}
+                  </label>
+              `;
+          container.appendChild(div);
+        });
+      }
+
+      function updateColumnVisibility() {
+        if (!dataTable) return;
+
+        const checkboxes = document.querySelectorAll(
+          '#column-options input[type="checkbox"]'
+        );
+        const selectedColumns = Array.from(checkboxes)
+          .filter((cb) => cb.checked)
+          .map((cb) => cb.dataset.column);
+
+        localStorage.setItem("columnSettings", JSON.stringify(selectedColumns));
+
+        dataTable.columns().every(function (index) {
+          const column = dataTable.column(index);
+          const columnId = column.dataSrc();
+          column.visible(selectedColumns.includes(columnId));
+        });
+
+        dataTable.draw();
+      }
+
+      function formatValue(key, value) {
+        if (value === null || value === undefined) return "-";
+
+        if (key.includes("date")) {
+          try {
+            if (typeof persianDate !== "undefined") {
+              return new persianDate(new Date(value)).format("YYYY/MM/DD");
+            } else {
+              const date = new Date(value);
+              const year = date.getFullYear() - 621;
+              const month = date.getMonth() + 1;
+              const day = date.getDate();
+              return `${year}/${month.toString().padStart(2, "0")}/${day
+                .toString()
+                .padStart(2, "0")}`;
+            }
+          } catch (error) {
+            console.error("خطا در تبدیل تاریخ به شمسی:", error);
+            return value;
+          }
+        }
+
+        if (key.includes("price") || key.includes("value")) {
+          return Number(value).toLocaleString("fa-IR");
+        }
+
+        if (key.includes("volume")) {
+          return Number(value).toLocaleString("fa-IR");
+        }
+
+        return value;
+      }
+
+      function toggleLoading(show) {
+        $(".loading-overlay").css("display", show ? "flex" : "none");
+      }
+
+      async function loadData() {
+        try {
+          toggleLoading(true);
+
+          const persianStartDate = $("#startDate").val() || "";
+          const persianEndDate = $("#endDate").val() || "";
+
+          const params = {
+            market: $("#marketSelect").val() || "",
+            product_name: $("#productSelect").val() || "",
+            producer: $("#producerSelect").val() || "",
+          };
+
+          if (persianStartDate) {
+            const startDate = convertPersianToGregorian(persianStartDate);
+            if (startDate) {
+              params.start_date = startDate;
+            } else {
+              toggleLoading(false);
+              return;
+            }
+          }
+
+          if (persianEndDate) {
+            const endDate = convertPersianToGregorian(persianEndDate);
+            if (endDate) {
+              params.end_date = endDate;
+            } else {
+              toggleLoading(false);
+              return;
+            }
+          }
+
+          if (
+            params.start_date &&
+            params.end_date &&
+            params.start_date > params.end_date
+          ) {
+            Swal.fire({
+              title: "خطا",
+              text: "تاریخ پایان باید بعد از تاریخ شروع باشد.",
+              icon: "error",
+              confirmButtonText: "تایید",
+            });
+            toggleLoading(false);
+            return;
+          }
+
+          if (dataTable) {
+            dataTable.clear().destroy();
+            $("#resultTable").empty();
+          }
+
+          const response = await $.ajax({
+            url: "http://185.213.164.220:8000/markets/data",
+            data: params,
+            cache: false,
+          });
+
+          const filteredData = response.filtered_data || [];
+          if (filteredData.length === 0) {
+            $(".nothingtoshowdiv").css("display", "flex");
+            $(".bgshowresult").css("display", "none");
+            Swal.fire({
+              title: "بدون نتیجه",
+              text: "هیچ داده‌ای برای این فیلترها یافت نشد.",
+              icon: "info",
+              confirmButtonText: "تایید",
+            });
+            toggleLoading(false);
+            return;
+          }
+
+          const allColumns = Object.keys(filteredData[0] || {});
+          updateColumnOptions(allColumns);
+
+          const formattedData = filteredData.map((row) => {
+            const newRow = {};
+            Object.keys(row).forEach((key) => {
+              newRow[key] = formatValue(key, row[key]);
+            });
+            return newRow;
+          });
+
+          $(".nothingtoshowdiv").css("display", "none");
+          $(".bgshowresult").css("display", "block");
+
+          dataTable = $("#resultTable").DataTable({
+            data: formattedData,
+            columns: allColumns.map((key) => ({
+              title: translateHeader(key),
+              data: key,
+              visible: defaultColumns.includes(key),
+              render: function (data, type, row, meta) {
+                return `<span data-label="${translateHeader(
+                  key
+                )}">${data}</span>`;
+              },
+            })),
+            language: datatablesFA,
+            responsive: false,
+            autoWidth: false,
+            scrollX: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+              {
+                extend: "copy",
+                text: "کپی",
+                className: "btn btn-default",
+              },
+              {
+                extend: "csv",
+                text: "CSV",
+                className: "btn btn-default",
+                charset: "utf-8",
+                bom: true,
+                exportOptions: {
+                  columns: ":visible",
+                },
+              },
+              {
+                extend: "excel",
+                text: "Excel",
+                className: "btn btn-default",
+                title: "گزارش بازار کالا",
+                messageTop: function () {
+                  const now = new persianDate()
+                    .toCalendar("persian")
+                    .toLocale("fa");
+                  return `تاریخ گزارش: ${now.format(
+                    "YYYY/MM/DD HH:mm:ss"
+                  )}\nکاربر: کارگزاری برهان سهند`;
+                },
+                exportOptions: {
+                  columns: ":visible",
+                },
+              },
+              {
+                extend: "print",
+                text: "چاپ",
+                className: "btn btn-default",
+                exportOptions: {
+                  columns: ":visible",
+                },
+                customize: function (win) {
+                  if (!dataTable || dataTable.rows().count() === 0) {
+                    alert("هیچ داده‌ای برای چاپ وجود ندارد.");
+                    return;
+                  }
+
+                  const now = new persianDate()
+                    .toCalendar("persian")
+                    .toLocale("fa");
+                  const persianDateTime = now
+                    .subtract("days", 1)
+                    .format("YYYY/MM/DD HH:mm:ss");
+
+                  const $body = $(win.document.body);
+
+                  // حذف محتوای پیش‌فرض
+                  $body.empty();
+
+                  // تنظیم استایل‌های اصلی
+                  $body.css({
+                    "font-family": '"Vazirmatn", Arial, sans-serif',
+                    direction: "rtl",
+                    padding: "0",
+                    margin: "0",
+                    background: "#ffffff",
+                  });
+
+                  // اضافه کردن style به head
+                  $(win.document.head).append(`
+                                  <style>
+                                      @media print {
+                                          @page {
+                                              size: landscape;
+                                              margin: 0.5cm;
+                                          }
+                                          
+                                          body {
+                                              margin: 0;
+                                              padding: 0 !important;
+                                              font-family: 'Vazirmatn', sans-serif !important;
+                                          }
+                                          
+                                          .print-header {
+                                              position: relative;
+                                              padding: 10px;
+                                              border-bottom: 1px solid #6c1f4b;
+                                              margin-bottom: 10px;
+                                              background: linear-gradient(to bottom, #f8f9fa, #f0e0e9);
+                                              border-radius: 5px;
+                                          }
+                                          
+                                          .print-header .logo {
+                                              position: absolute;
+                                              top: 8px;
+                                              right: 8px;
+                                              width: 50px;
+                                              height: 50px;
+                                              background-color: #ddd;
+                                              border-radius: 5px;
+                                          }
+                                          
+                                          .print-header .title-info {
+                                              text-align: center;
+                                              padding-right: 60px;
+                                          }
+                                          
+                                          .print-header h1 {
+                                              font-size: 18px;
+                                              font-weight: bold;
+                                              margin: 0 0 5px 0;
+                                              color: #6c1f4b;
+                                          }
+                                          
+                                          .print-header .info {
+                                              font-size: 10px;
+                                              color: #333;
+                                          }
+                                          
+                                          .print-filters {
+                                              display: flex;
+                                              flex-wrap: wrap;
+                                              justify-content: center;
+                                              margin: 4px 0;
+                                              padding: 3px;
+                                              background-color: #f0e0e9;
+                                              border-radius: 5px;
+                                          }
+                                          
+                                          .print-filters div {
+                                              background: #ffffff;
+                                              margin: 1px;
+                                              padding: 2px 4px;
+                                              border-radius: 3px;
+                                              border: 1px solid #6c1f4b;
+                                              font-size: 8px;
+                                              color: #6c1f4b;
+                                          }
+                                          
+                                          .print-table-container {
+                                              margin-bottom: 15px; /* افزایش فاصله جدول از پایین صفحه */
+                                          }
+                                          
+                                          .print-table {
+                                              width: 100%;
+                                              border-collapse: collapse;
+                                              table-layout: fixed;
+                                          }
+                                          
+                                          .print-table th {
+                                              background: #6c1f4b !important;
+                                              color: white !important;
+                                              font-weight: bold;
+                                              border: 1px solid #333;
+                                              padding: 3px 2px;
+                                              text-align: center !important;
+                                              font-size: 8px;
+                                          }
+                                          
+                                          .print-table td {
+                                              border: 1px solid #666;
+                                              padding: 3px 2px;
+                                              text-align: center !important;
+                                              font-size: 9px; /* اندازه فونت سلول‌ها بزرگتر */
+                                              color: #333;
+                                              white-space: normal;
+                                              word-wrap: break-word;
+                                          }
+                                          
+                                          .print-table tr:nth-child(even) {
+                                              background-color: #f9f9fb !important;
+                                          }
+                                          
+                                          .watermark {
+                                              position: fixed;
+                                              top: 50%;
+                                              left: 50%;
+                                              transform: translate(-50%, -50%) rotate(-45deg);
+                                              font-size: 40px;
+                                              color: rgba(108, 31, 75, 0.05);
+                                              z-index: -1;
+                                              white-space: nowrap;
+                                              pointer-events: none;
+                                          }
+                                          
+                                          .print-footer {
+                                              position: fixed;
+                                              bottom: 5px; /* کمی فاصله از پایین صفحه */
+                                              left: 0;
+                                              right: 0;
+                                              text-align: center;
+                                              padding: 3px;
+                                              font-size: 9px;
+                                              border-top: 1px solid #6c1f4b;
+                                              background-color: rgba(255, 255, 255, 0.95);
+                                          }
+                                          
+                                          .page-container {
+                                              position: relative;
+                                              height: 100%;
+                                              page-break-after: always;
+                                              padding-bottom: 20px;
+                                          }
+                                          
+                                          .page-container:last-child {
+                                              page-break-after: auto;
+                                          }
+                                          
+                                          .page-number {
+                                              margin-top: 3px;
+                                              font-size: 10px;
+                                              font-weight: bold;
+                                              color: #6c1f4b;
+                                              background-color: white;
+                                              padding: 3px 8px;
+                                              border-radius: 3px;
+                                              display: inline-block;
+                                              box-shadow: 0 0 3px rgba(0,0,0,0.2);
+                                          }
+                                      }
+                                  </style>
+                              `);
+
+                  // اطلاعات فیلترها
+                  const marketValue = $("#marketSelect").val() || "";
+                  const productValue = $("#productSelect").val() || "";
+                  const producerValue = $("#producerSelect").val() || "";
+                  const startDateDisplay = $("#startDate").val() || "";
+                  const endDateDisplay = $("#endDate").val() || "";
+
+                  // ستون‌های قابل نمایش
+                  const visibleColumnIndexes = dataTable
+                    .columns(":visible")
+                    .indexes()
+                    .toArray();
+                  const visibleColumns = visibleColumnIndexes.map((idx) =>
+                    dataTable.column(idx).dataSrc()
+                  );
+
+                  if (
+                    !Array.isArray(visibleColumns) ||
+                    visibleColumns.length === 0
+                  ) {
+                    alert("هیچ ستونی برای نمایش انتخاب نشده است.");
+                    return;
+                  }
+
+                  // داده‌های جدول
+                  const rows = dataTable.rows().data().toArray();
+                  const rowsPerPage = 25; // افزایش تعداد ردیف در هر صفحه به 25
+                  const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+                  // ایجاد هدر مشترک
+                  function createHeader() {
+                    return `
+                                      <div class="print-header">
+                                          <div class="logo"></div>
+                                          <div class="title-info">
+                                              <h1>گزارش بازار کالا</h1>
+                                              <div class="info">
+                                                  تاریخ گزارش: ${persianDateTime}<br>
+                                                  کاربر: کارگزاری برهان سهند
+                                              </div>
+                                          </div>
+                                      </div>
+                                  `;
+                  }
+
+                  // ایجاد بخش فیلترها
+                  function createFilters() {
+                    let filterInfo = '<div class="print-filters">';
+                    if (marketValue)
+                      filterInfo += `<div>تالار: ${marketValue}</div>`;
+                    if (productValue)
+                      filterInfo += `<div>محصول: ${productValue}</div>`;
+                    if (producerValue)
+                      filterInfo += `<div>کارخانه: ${producerValue}</div>`;
+                    if (startDateDisplay)
+                      filterInfo += `<div>از تاریخ: ${startDateDisplay}</div>`;
+                    if (endDateDisplay)
+                      filterInfo += `<div>تا تاریخ: ${endDateDisplay}</div>`;
+                    filterInfo += "</div>";
+                    return filterInfo;
+                  }
+
+                  // ایجاد هدر جدول
+                  function createTableHeader() {
+                    let tableHeader = "<thead><tr>";
+                    visibleColumns.forEach((col) => {
+                      tableHeader += `<th>${translateHeader(col)}</th>`;
+                    });
+                    tableHeader += "</tr></thead>";
+                    return tableHeader;
+                  }
+
+                  // ایجاد ردیف‌های جدول
+                  function createTableRows(startIdx, endIdx) {
+                    let tableBody = "<tbody>";
+                    for (let i = startIdx; i < endIdx; i++) {
+                      tableBody += "<tr>";
+                      visibleColumns.forEach((col) => {
+                        tableBody += `<td>${rows[i][col] || "-"}</td>`;
+                      });
+                      tableBody += "</tr>";
+                    }
+                    tableBody += "</tbody>";
+                    return tableBody;
+                  }
+
+                  // ایجاد فوتر
+                  function createFooter(pageNum) {
+                    return `
+                                      <div class="print-footer">
+                                          کارگزاری برهان سهند - تمامی حقوق محفوظ است
+                                          <div class="page-number">صفحه ${pageNum} از ${totalPages}</div>
+                                      </div>
+                                  `;
+                  }
+
+                  // ایجاد تمام صفحات
+                  let fullContent = "";
+                  for (let page = 0; page < totalPages; page++) {
+                    const start = page * rowsPerPage;
+                    const end = Math.min(start + rowsPerPage, rows.length);
+
+                    fullContent += `
+                                      <div class="page-container">
+                                          ${createHeader()}
+                                          ${page === 0 ? createFilters() : ""}
+                                          <div class="print-table-container">
+                                              <table class="print-table">
+                                                  ${createTableHeader()}
+                                                  ${createTableRows(start, end)}
+                                              </table>
+                                          </div>
+                                          ${createFooter(page + 1)}
+                                      </div>
+                                  `;
+                  }
+
+                  // اضافه کردن محتوا به صفحه
+                  $body.append(fullContent);
+                },
+              },
+            ],
+            order: [[columnOrder.indexOf("transaction_date"), "desc"]],
+            pageLength: 15,
+            lengthMenu: [
+              [10, 15, 50, 100, -1],
+              ["۱۰", "۱۵", "۵۰", "۱۰۰", "همه"],
+            ],
+            initComplete: function () {
+              const savedColumns = localStorage.getItem("columnSettings");
+              if (savedColumns) {
+                const selectedColumns = JSON.parse(savedColumns);
+                updateColumnVisibility();
+              }
+              console.log("جدول رندر شد");
+            },
+          });
+
+          Swal.fire({
+            title: "موفق",
+            text: `${formattedData.length} رکورد با موفقیت بارگذاری شد`,
+            icon: "success",
+            confirmButtonText: "تایید",
+            timer: 3000,
+          });
+        } catch (error) {
+          console.error("خطا:", error);
+          $(".nothingtoshowdiv").css("display", "flex");
+          $(".bgshowresult").css("display", "none");
+          let errorMessage = "خطا در دریافت اطلاعات. لطفاً دوباره تلاش کنید.";
+          if (error.responseJSON && error.responseJSON.detail) {
+            errorMessage = error.responseJSON.detail;
+          }
+          Swal.fire({
+            title: "خطا",
+            text: errorMessage,
+            icon: "error",
+            confirmButtonText: "تایید",
+          });
+        } finally {
+          toggleLoading(false);
+        }
+      }
+
+      $(document).on("keydown", function (e) {
+        if (e.ctrlKey && e.key === "Enter") {
+          loadData();
+        }
+      });
+    </script>
+  </body>
+</html>
